@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\Ryan\.Rider2019.2\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Ryan\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_MP - Of Darkness Spawned.-1068269392.00" t="ExcludeRecursive" />
+    <e p="D:\MP - Of Darkness Spawned" t="IncludeRecursive">
+      <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="Editor" t="Include">
+          <e p="--HotKeys" t="Include">
+            <e p="WorkFlowHotkeys.cs" t="Include" />
+          </e>
+          <e p="DarkTheme" t="Include">
+            <e p="DarkTheme.cs" t="Include" />
+          </e>
+          <e p="MarkdownViewer" t="Include">
+            <e p="Editor" t="Include">
+              <e p="Scripts" t="Include">
+                <e p="Layout" t="Include">
+                  <e p="Block.cs" t="Include" />
+                  <e p="BlockContainer.cs" t="Include" />
+                  <e p="BlockContent.cs" t="Include" />
+                  <e p="BlockLine.cs" t="Include" />
+                  <e p="BlockSpace.cs" t="Include" />
+                  <e p="Content.cs" t="Include" />
+                  <e p="ContentImage.cs" t="Include" />
+                  <e p="ContentText.cs" t="Include" />
+                  <e p="Context.cs" t="Include" />
+                  <e p="IActions.cs" t="Include" />
+                  <e p="IBuilder.cs" t="Include" />
+                  <e p="Layout.cs" t="Include" />
+                  <e p="LayoutBuilder.cs" t="Include" />
+                  <e p="Style.cs" t="Include" />
+                  <e p="StyleConverter.cs" t="Include" />
+                </e>
+                <e p="MarkdownEditor.cs" t="Include" />
+                <e p="MarkdownEditorAsset.cs" t="Include" />
+                <e p="MarkdownHandleImages.cs" t="Include" />
+                <e p="MarkdownHandleNavigate.cs" t="Include" />
+                <e p="MarkdownHistory.cs" t="Include" />
+                <e p="MarkdownMenus.cs" t="Include" />
+                <e p="MarkdownPreferences.cs" t="Include" />
+                <e p="MarkdownUtils.cs" t="Include" />
+                <e p="MarkdownViewer.cs" t="Include" />
+                <e p="Renderer" t="Include">
+                  <e p="RendererBlockCode.cs" t="Include" />
+                  <e p="RendererBlockHeading.cs" t="Include" />
+                  <e p="RendererBlockHtml.cs" t="Include" />
+                  <e p="RendererBlockList.cs" t="Include" />
+                  <e p="RendererBlockParagraph.cs" t="Include" />
+                  <e p="RendererBlockQuote.cs" t="Include" />
+                  <e p="RendererBlockThematicBreak.cs" t="Include" />
+                  <e p="RendererInlineAutoLink.cs" t="Include" />
+                  <e p="RendererInlineCode.cs" t="Include" />
+                  <e p="RendererInlineDelimiter.cs" t="Include" />
+                  <e p="RendererInlineEmphasis.cs" t="Include" />
+                  <e p="RendererInlineHtml.cs" t="Include" />
+                  <e p="RendererInlineHtmlEntity.cs" t="Include" />
+                  <e p="RendererInlineLineBreak.cs" t="Include" />
+                  <e p="RendererInlineLink.cs" t="Include" />
+                  <e p="RendererInlineLiteral.cs" t="Include" />
+                  <e p="RendererMarkdown.cs" t="Include" />
+                </e>
+              </e>
+            </e>
+            <e p="Markdig LICENSE.txt" t="Include" />
+            <e p="Scripts" t="Include">
+              <e p="MarkdownAsset.cs" t="Include" />
+              <e p="MarkdownImporter.cs" t="Include" />
+            </e>
+            <e p="SIL Open Font LICENSE.txt" t="Include" />
+            <e p="Third-Party Notices.txt" t="Include" />
+          </e>
+        </e>
+        <e p="Plugins" t="Include">
+          <e p="ConsolePro" t="Include">
+            <e p="ConsoleProDebug.cs" t="Include" />
+            <e p="Remote" t="Include">
+              <e p="ConsoleProRemoteServer.cs" t="Include" />
+              <e p="LiteNetLib" t="Include">
+                <e p="FastBitConverter.cs" t="Include" />
+                <e p="INetEventListener.cs" t="Include" />
+                <e p="NatPunchModule.cs" t="Include" />
+                <e p="NetConstants.cs" t="Include" />
+                <e p="NetDataReader.cs" t="Include" />
+                <e p="NetDataWriter.cs" t="Include" />
+                <e p="NetDebug.cs" t="Include" />
+                <e p="NetEndPoint.cs" t="Include" />
+                <e p="NetManager.cs" t="Include" />
+                <e p="NetPacket.cs" t="Include" />
+                <e p="NetPacketPool.cs" t="Include" />
+                <e p="NetPeer.cs" t="Include" />
+                <e p="NetPeerCollection.cs" t="Include" />
+                <e p="NetSerializer.cs" t="Include" />
+                <e p="NetSocket.cs" t="Include" />
+                <e p="NetThread.cs" t="Include" />
+                <e p="NetUtils.cs" t="Include" />
+                <e p="NtpSyncModule.cs" t="Include" />
+                <e p="ReliableChannel.cs" t="Include" />
+                <e p="SequencedChannel.cs" t="Include" />
+                <e p="SimpleChannel.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="LeanTween" t="Include">
+            <e p="Editor" t="Include">
+              <e p="LeanTweenDocumentationEditor.cs" t="Include" />
+            </e>
+            <e p="Framework" t="Include">
+              <e p="LeanAudio.cs" t="Include" />
+              <e p="LeanSmooth.cs" t="Include" />
+              <e p="LeanTest.cs" t="Include" />
+              <e p="LeanTween.cs" t="Include" />
+              <e p="LeanTweenExt.cs" t="Include" />
+              <e p="LTDescr.cs" t="Include" />
+              <e p="LTDescrOptional.cs" t="Include" />
+              <e p="LTSeq.cs" t="Include" />
+            </e>
+            <e p="License.txt" t="Include" />
+            <e p="ReadMe.txt" t="Include" />
+          </e>
+          <e p="RainbowAssets" t="Include">
+            <e p="!Core" t="Include">
+              <e p="NOTICES.txt" t="Include" />
+            </e>
+          </e>
+          <e p="Sirenix" t="Include">
+            <e p="Assemblies" t="Include">
+              <e p="link.xml" t="Include" />
+              <e p="Sirenix.OdinInspector.Attributes.xml" t="Include" />
+              <e p="Sirenix.OdinInspector.Editor.xml" t="Include" />
+              <e p="Sirenix.Serialization.Config.xml" t="Include" />
+              <e p="Sirenix.Utilities.Editor.xml" t="Include" />
+              <e p="Sirenix.Utilities.xml" t="Include" />
+            </e>
+            <e p="Odin Inspector" t="Include">
+              <e p="Scripts" t="Include">
+                <e p="Editor" t="Include">
+                  <e p="AssemblyImportSettingsAutomation.cs" t="Include" />
+                  <e p="BuildAOTAutomation.cs" t="Include" />
+                  <e p="EnsureOdinInspectorDefine.cs" t="Include" />
+                  <e p="FixBrokenUnityObjectWrapperDrawer.cs" t="Include" />
+                  <e p="SyncListDrawer.cs" t="Include" />
+                  <e p="SyncVarAttributeDrawer.cs" t="Include" />
+                  <e p="Vector2IntMinMaxAttributeDrawer.cs" t="Include" />
+                  <e p="VectorIntDrawers.cs" t="Include" />
+                  <e p="VectorIntPropertyResolvers.cs" t="Include" />
+                </e>
+                <e p="SerializedNetworkBehaviour.cs" t="Include" />
+                <e p="VectorIntFormatters.cs" t="Include" />
+              </e>
+            </e>
+            <e p="ReadMe.txt" t="Include" />
+          </e>
+          <e p="TextMesh Pro" t="Include">
+            <e p="Fonts" t="Include">
+              <e p="LiberationSans - OFL.txt" t="Include" />
+            </e>
+            <e p="Resources" t="Include">
+              <e p="LineBreaking Following Characters.txt" t="Include" />
+              <e p="LineBreaking Leading Characters.txt" t="Include" />
+              <e p="Shaders" t="Include">
+                <e p="TMP_Bitmap-Custom-Atlas.shader" t="Include" />
+                <e p="TMP_Bitmap-Mobile.shader" t="Include" />
+                <e p="TMP_Bitmap.shader" t="Include" />
+                <e p="TMP_SDF Overlay.shader" t="Include" />
+                <e p="TMP_SDF-Mobile Masking.shader" t="Include" />
+                <e p="TMP_SDF-Mobile Overlay.shader" t="Include" />
+                <e p="TMP_SDF-Mobile.shader" t="Include" />
+                <e p="TMP_SDF-Surface-Mobile.shader" t="Include" />
+                <e p="TMP_SDF-Surface.shader" t="Include" />
+                <e p="TMP_SDF.shader" t="Include" />
+                <e p="TMP_Sprite.shader" t="Include" />
+                <e p="TMPro.cginc" t="Include" />
+                <e p="TMPro_Properties.cginc" t="Include" />
+                <e p="TMPro_Surface.cginc" t="Include" />
+              </e>
+            </e>
+            <e p="Sprites" t="Include">
+              <e p="EmojiOne Attribution.txt" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Scripts" t="Include">
+          <e p="Camera" t="Include">
+            <e p="CameraFollow.cs" t="Include" />
+          </e>
+          <e p="Character" t="Include">
+            <e p="CharacterController.cs" t="Include" />
+            <e p="CharacterMotor.cs" t="Include" />
+            <e p="CollisionChecker.cs" t="Include" />
+            <e p="PlayerInteraction.cs" t="Include" />
+            <e p="PlayerStatsDisplay.cs" t="Include" />
+          </e>
+          <e p="Health" t="Include">
+            <e p="CharacterHealth.cs" t="Include" />
+            <e p="ITakeDamage.cs" t="Include" />
+          </e>
+          <e p="Misc" t="Include">
+            <e p="CrowFlyController.cs" t="Include" />
+          </e>
+          <e p="Objects" t="Include">
+            <e p="Crate.cs" t="Include" />
+          </e>
+          <e p="State Machine" t="Include">
+            <e p="PlayerStates" t="Include">
+              <e p="ClimbingState.cs" t="Include" />
+              <e p="DamagedState.cs" t="Include" />
+              <e p="JumpingState.cs" t="Include" />
+              <e p="ShootingState.cs" t="Include" />
+              <e p="StandingState.cs" t="Include" />
+            </e>
+            <e p="State.cs" t="Include" />
+            <e p="StateMachine.cs" t="Include" />
+          </e>
+          <e p="Weapons" t="Include">
+            <e p="IDealDamage.cs" t="Include" />
+            <e p="Trap.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="MP - Of Darkness Spawned.sln" t="IncludeFlat" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="Packages" t="ExcludeRecursive" />
+      <e p="Sirenix.OdinInspector.CompatibilityLayer.csproj" t="IncludeRecursive" />
+      <e p="Sirenix.OdinInspector.CompatibilityLayer.Editor.csproj" t="IncludeRecursive" />
+      <e p="Temp\bin" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>

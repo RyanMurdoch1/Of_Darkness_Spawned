@@ -30,6 +30,12 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private LayerMask whatIsGround;
     [BoxGroup("hideCheckVariables/Check Variables")]
     public bool canClimb;
+
+    [SerializeField] private bool hideBowObjects = true;
+    [HideIfGroup("hideBowObjects")] [BoxGroup("hideBowObjects/Bow Objects")] [SerializeField]
+    private GameObject backBowArm;
+    [BoxGroup("hideBowObjects/Bow Objects")] [SerializeField]
+    private GameObject frontBowArm;
     #endregion
     
     public Animator animator;
@@ -42,6 +48,7 @@ public class CharacterController : MonoBehaviour
     public JumpingState jumpingState;
     public ClimbingState climbingState;
     public DamagedState damagedState;
+    public ShootingState shootingState;
 
     private void OnEnable()
     {
@@ -63,6 +70,7 @@ public class CharacterController : MonoBehaviour
         jumpingState = new JumpingState(_characterStateMachine, airSpeed, _collisionChecker, _characterMotor, this);
         climbingState = new ClimbingState(_characterStateMachine, _characterMotor, climbSpeed, this);
         damagedState = new DamagedState(_characterStateMachine, this, _characterMotor);
+        shootingState = new ShootingState(_characterStateMachine, this, _characterMotor, frontBowArm, backBowArm);
         
         _characterStateMachine.Initialize(standingState);
     }

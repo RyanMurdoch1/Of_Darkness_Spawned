@@ -20,7 +20,6 @@ public class Crate : MonoBehaviour, ITakeDamage
     {
         if (environmentCollider.CompareTag("Weapon"))
         {
-            Debug.Log("Took damage");
            TakeDamage(environmentCollider.GetComponent<IDealDamage>().damageAmount, environmentCollider.transform.position);
         }
     }

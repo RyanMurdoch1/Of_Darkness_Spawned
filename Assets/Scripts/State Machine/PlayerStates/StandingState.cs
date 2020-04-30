@@ -32,6 +32,11 @@ public class StandingState : State
         {
             StateMachine.ChangeState(_character.climbingState);
         }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            StateMachine.ChangeState(_character.shootingState);
+        }
     }
 
     public override void PhysicsUpdate()
