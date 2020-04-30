@@ -31,6 +31,7 @@ public class DamagedState : State
 
     private IEnumerator DamageLock()
     {
+        CameraShake.shakeCamera(0.01f, 0.6f);
         yield return _lockTime;
         StateMachine.ChangeState(_characterController.standingState);
     }

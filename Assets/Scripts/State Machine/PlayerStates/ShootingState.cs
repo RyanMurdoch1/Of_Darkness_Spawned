@@ -14,7 +14,10 @@ public class ShootingState : State
     private readonly Vector2 _rightScale = new Vector2(1, 1);
     private Vector2 _clampVector;
     private readonly Camera _playerCamera;
-    public static event Action<float, float> AdjustCamera; 
+    public static event Action<float, float> AdjustCamera;
+    public static event Action<bool> DrawBow;
+    public static event Action<int> BowForce;
+    private readonly WaitForSeconds _bowStageWaitTime = new WaitForSeconds(0.25f);
 
     public ShootingState(StateMachine stateMachine, CharacterController character, CharacterMotor characterMotor, GameObject frontArm, GameObject backArm) : base(stateMachine)
     {
@@ -38,8 +41,24 @@ public class ShootingState : State
         }
         _characterMotor.FreezeMovement();
         DisplayBow(true);
+        DrawBow?.Invoke(true);
+        _character.StartCoroutine(ChargeBow());
     }
 
+    private IEnumerator ChargeBow()
+    {
+        BowForce?.Invoke(0);
+        CameraShake.shakeCamera(0.002f, 0.25f);
+        yield return _bowStageWaitTime;
+        BowForce?.Invoke(1);
+        CameraShake.shakeCamera(0.004f, 0.25f);
+        yield return _bowStageWaitTime;
+        CameraShake.shakeCamera(0.006f, 0.25f);
+        BowForce?.Invoke(2);
+        yield return _bowStageWaitTime;
+        BowForce?.Invoke(3);
+    }
+    
     private void SetPose(Vector2 armScale, float adjustmentValue)
     {
         _frontArm.transform.localScale = armScale;
@@ -51,6 +70,7 @@ public class ShootingState : State
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
+            _character.StopAllCoroutines();
             _character.StartCoroutine(FireArrow());
         }
 
@@ -98,8 +118,9 @@ public class ShootingState : State
     private IEnumerator FireArrow()
     {
         _character.animator.SetBool(FiringBow, true);
-        yield return new WaitForSeconds(0.25f);
+        yield return _bowStageWaitTime;
         _character.animator.SetBool(FiringBow, false);
+        _character.StartCoroutine(ChargeBow());
     }
 
     public override void Exit()
@@ -107,5 +128,7 @@ public class ShootingState : State
         DisplayBow(false);
         _characterMotor.ResumeMovement();
         AdjustCamera?.Invoke(0, 3);
+        DrawBow?.Invoke(false);
+        CameraShake.shakeCamera(0, 0);
     }
 }

@@ -33,7 +33,7 @@ public class StandingState : State
             StateMachine.ChangeState(_character.climbingState);
         }
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && _isGrounded)
         {
             StateMachine.ChangeState(_character.shootingState);
         }
