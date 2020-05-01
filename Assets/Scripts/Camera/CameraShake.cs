@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class CameraShake : MonoBehaviour
@@ -18,10 +15,7 @@ public class CameraShake : MonoBehaviour
         shakeCamera += Shake;
     }
 
-    private void OnDisable()
-    {
-        shakeCamera -= Shake;
-    }
+    private void OnDisable() => shakeCamera -= Shake;
 
     private void Shake(float amount, float length)
     {

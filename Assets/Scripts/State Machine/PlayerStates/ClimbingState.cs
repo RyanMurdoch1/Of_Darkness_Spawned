@@ -18,12 +18,7 @@ public class ClimbingState : State
         base.Enter();
         _character.animator.SetBool(Climbing, true);
     }
-
-    public override void Exit()
-    {
-        _character.animator.SetBool(Climbing, false);
-    }
-
+    
     public override void HandleInput()
     {
         _verticalMovement = Input.GetAxisRaw("Vertical") * _climbSpeed;
@@ -34,8 +29,7 @@ public class ClimbingState : State
         }
     }
 
-    public override void PhysicsUpdate()
-    {
-        _character.characterMotor.MoveVertical(_verticalMovement);
-    }
+    public override void PhysicsUpdate() => _character.characterMotor.MoveVertical(_verticalMovement);
+    
+    public override void Exit() => _character.animator.SetBool(Climbing, false);
 }

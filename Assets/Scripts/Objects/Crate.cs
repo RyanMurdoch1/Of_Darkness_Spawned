@@ -11,10 +11,7 @@ public class Crate : MonoBehaviour, ITakeDamage
         Perish();
     }
 
-    public void Perish()
-    {
-        gameObject.SetActive(false);
-    }
+    public void Perish() => gameObject.SetActive(false);
 
     private void OnTriggerEnter2D(Collider2D environmentCollider)
     {

@@ -10,10 +10,7 @@ public class CharacterHealth : MonoBehaviour, ITakeDamage
     public static event Action<int> HealthChanged;
     public static event Action<Vector2> DamagedFromDirection;
 
-    private void OnEnable()
-    {
-        HealthChanged?.Invoke(playerHealth);
-    }
+    private void OnEnable() => HealthChanged?.Invoke(playerHealth);
 
     public void TakeDamage(int damage, Vector2 damageDirection)
     {

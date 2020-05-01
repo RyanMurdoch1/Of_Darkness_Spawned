@@ -36,21 +36,15 @@ public class CharacterMotor
         }
     }
 
-    public void StopMovement()
-    {
-        _rigidbody2D.velocity = Vector2.zero;
-    }
-
+    private void StopMovement() => _rigidbody2D.velocity = Vector2.zero;
+    
     public void FreezeMovement()
     {
         _rigidbody2D.isKinematic = true;
         _rigidbody2D.velocity = Vector2.zero;
     }
 
-    public void ResumeMovement()
-    {
-        _rigidbody2D.isKinematic = false;
-    }
+    public void ResumeMovement() => _rigidbody2D.isKinematic = false;
 
     public void TakeDamage(Vector2 damageDirection)
     {
@@ -67,10 +61,7 @@ public class CharacterMotor
         _rigidbody2D.velocity = Vector3.SmoothDamp(_rigidbody2D.velocity, targetVelocity, ref _velocity, _smoothingValue);
     }
 
-    public void Jump()
-    {
-        _rigidbody2D.AddForce(new Vector2(0f, _jumpForce));
-    }
+    public void Jump() => _rigidbody2D.AddForce(new Vector2(0f, _jumpForce));
     
     public void Flip()
     {

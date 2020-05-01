@@ -47,15 +47,12 @@ public class JumpingState : State
         
         _character.characterMotor.MoveHorizontal(_horizontalMovement);
     }
-
-    public override void Exit()
-    {
-        _character.animator.SetBool(Jumping, false); 
-    }
-
+    
     private IEnumerator ClearGround()
     {
         yield return _waitToClear;
         _clearedGround = true;
     }
+    
+    public override void Exit() => _character.animator.SetBool(Jumping, false);
 }

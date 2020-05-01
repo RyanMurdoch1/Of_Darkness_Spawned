@@ -25,8 +25,6 @@ public class CharacterController : MonoBehaviour
     [BoxGroup("hideCheckVariables/Check Variables")]
     [SerializeField] private Transform groundCheck;
     [BoxGroup("hideCheckVariables/Check Variables")]
-    [SerializeField] private Transform ceilingCheck;
-    [BoxGroup("hideCheckVariables/Check Variables")]
     [SerializeField] private LayerMask whatIsGround;
     [BoxGroup("hideCheckVariables/Check Variables")]
     public bool canClimb;
@@ -36,10 +34,6 @@ public class CharacterController : MonoBehaviour
     private GameObject backBowArm;
     [BoxGroup("hideBowObjects/Bow Objects")] [SerializeField]
     private GameObject frontBowArm;
-    [BoxGroup("hideBowObjects/Bow Objects")] [SerializeField]
-    private GameObject arrow;
-    [BoxGroup("hideBowObjects/Bow Objects")] [SerializeField]
-    private Transform firePoint;
     [BoxGroup("hideBowObjects/Bow Objects")] [SerializeField]
     private ArrowLauncher launcher;
     #endregion
@@ -53,25 +47,18 @@ public class CharacterController : MonoBehaviour
     public ClimbingState climbingState;
     public DamagedState damagedState;
     public BowState shootingState;
-
-
+    
     private Rigidbody2D _playerRigidbody2D;
     private CollisionChecker _collisionChecker;
 
-    private void OnEnable()
-    {
-        CharacterHealth.DamagedFromDirection += TakeDamage;
-    }
+    private void OnEnable() => CharacterHealth.DamagedFromDirection += TakeDamage;
 
-    private void OnDisable()
-    {
-        CharacterHealth.DamagedFromDirection -= TakeDamage;
-    }
-
+    private void OnDisable() => CharacterHealth.DamagedFromDirection -= TakeDamage;
+    
     private void Start()
     {
         characterStateMachine = new StateMachine();
-        _collisionChecker = new CollisionChecker(groundCheck, ceilingCheck, whatIsGround, this);
+        _collisionChecker = new CollisionChecker(groundCheck, whatIsGround, this);
         _playerRigidbody2D = GetComponent<Rigidbody2D>();
         characterMotor = new CharacterMotor(this, _playerRigidbody2D, jumpForce, movementSmoothing);
         standingState = new StandingState(walkSpeed, _collisionChecker,this);

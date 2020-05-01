@@ -4,7 +4,7 @@ using UnityEngine;
 public class ArrowLauncher : MonoBehaviour
 {
     [SerializeField] private List<Arrow> arrows;
-    private Queue<int> _arrowQueue = new Queue<int>(15);
+    private readonly Queue<int> _arrowQueue = new Queue<int>(15);
 
     private void OnEnable()
     {

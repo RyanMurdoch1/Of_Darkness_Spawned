@@ -11,7 +11,6 @@ public class CameraFollow : MonoBehaviour
     {
         transform.position = new Vector3(followTransform.position.x + _adjustment, followTransform.position.y, transform.position.z);
         _adjustment = Mathf.Lerp(_adjustment, _targetAdjustment, Time.deltaTime * _speed);
-
     }
 
     private void ReceiveAdjustmentValue(float adjustment, float speedMultiplier)
@@ -20,8 +19,7 @@ public class CameraFollow : MonoBehaviour
         _speed = speedMultiplier;
     }
 
-    private void OnEnable()
-    {
-        BowState.AdjustCamera += ReceiveAdjustmentValue;
-    }
+    private void OnEnable() => BowState.AdjustCamera += ReceiveAdjustmentValue;
+
+    private void OnDisable() => BowState.AdjustCamera -= ReceiveAdjustmentValue;
 }

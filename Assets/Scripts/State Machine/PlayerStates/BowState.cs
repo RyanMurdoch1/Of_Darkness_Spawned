@@ -10,6 +10,7 @@ public class BowState : State
     private readonly CharacterController _character;
     private float _bowForce;
     private const float BaseForce = 15f;
+    private const float ArmScaleAdjustment = 5f;
     private static readonly int DrawingBow = Animator.StringToHash("DrawingBow");
     private static readonly int FiringBow = Animator.StringToHash("FiringBow");
     private readonly Vector2 _leftScale = new Vector2(-1, 1);
@@ -34,18 +35,39 @@ public class BowState : State
     public override void Enter()
     {
         base.Enter();
-        if (!_character.characterMotor.FacingRight)
+        if (_character.characterMotor.FacingRight)
         {
-            SetPose(_leftScale, -5);
+            SetPose(_rightScale, ArmScaleAdjustment);
         }
         else
         {
-            SetPose(_rightScale, 5);
+            SetPose(_leftScale, -ArmScaleAdjustment);
         }
+
+        DisplayAndDrawBow(true);
         _character.characterMotor.FreezeMovement();
-        DisplayBow(true);
-        DrawBow?.Invoke(true);
         _character.StartCoroutine(ChargeBow());
+    }
+    
+    public override void HandleInput()
+    {
+        if (Input.GetKeyDown(KeyCode.F) && _readyToFire)
+        {
+            _character.StopAllCoroutines();
+            _character.StartCoroutine(FireArrow());
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _character.characterStateMachine.ChangeState(_character.jumpingState);
+        }
+
+        if (Math.Abs(Input.GetAxisRaw("Horizontal")) > 0.1f)
+        {
+            _character.characterStateMachine.ChangeState(_character.standingState);
+        }
+
+        RotateBow();
     }
 
     private IEnumerator ChargeBow()
@@ -64,34 +86,16 @@ public class BowState : State
         BowForce?.Invoke(3);
     }
     
-    private void SetPose(Vector2 armScale, float adjustmentValue)
+    private IEnumerator FireArrow()
     {
-        _frontArm.transform.localScale = armScale;
-        _backArm.transform.localScale = armScale;
-        AdjustCamera?.Invoke(adjustmentValue, 1);
+        _readyToFire = false;
+        _character.animator.SetBool(FiringBow, true);
+        _launcher.Launch(BaseForce);
+        yield return _bowStageWaitTime;
+        _character.animator.SetBool(FiringBow, false);
+        _character.StartCoroutine(ChargeBow());
     }
-
-    public override void HandleInput()
-    {
-        if (Input.GetKeyDown(KeyCode.F) && _readyToFire)
-        {
-            _character.StopAllCoroutines();
-            _character.StartCoroutine(FireArrow());
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            _character.characterStateMachine.ChangeState(_character.jumpingState);
-        }
-
-        if (Math.Abs(Input.GetAxisRaw("Horizontal")) > 0.1f)
-        {
-            _character.characterStateMachine.ChangeState(_character.standingState);
-        }
-        
-        RotateBow();
-    }
-
+    
     private void RotateBow()
     {
         var mouse = Input.mousePosition;
@@ -105,42 +109,39 @@ public class BowState : State
         {
             FlipPlayer(_rightScale);
         }
+
         var angle = Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg;
-        _backArm.transform.rotation =   Quaternion.Euler(0, 0, angle);
+        _backArm.transform.rotation = Quaternion.Euler(0, 0, angle);
         _frontArm.transform.rotation = Quaternion.Euler(0, 0, angle);
+    }
+
+    private void DisplayAndDrawBow(bool isDrawn)
+    {
+        _frontArm.SetActive(isDrawn);
+        _backArm.SetActive(isDrawn);
+        _character.animator.SetBool(DrawingBow, isDrawn);
+        DrawBow?.Invoke(isDrawn);
+    }
+    
+    private void SetPose(Vector2 armScale, float adjustmentValue)
+    {
+        _frontArm.transform.localScale = armScale;
+        _backArm.transform.localScale = armScale;
+        AdjustCamera?.Invoke(adjustmentValue, 1);
     }
 
     private void FlipPlayer(Vector2 armScale)
     {
-        _frontArm.transform.localScale = armScale;
-        _backArm.transform.localScale = armScale;
         _character.characterMotor.Flip();
-        AdjustCamera?.Invoke(Math.Abs(armScale.x - (-1)) < 0.1f ? -5 : 5, 1);
-    }
-    
-    private void DisplayBow(bool drawing)
-    {
-        _frontArm.SetActive(drawing);
-        _backArm.SetActive(drawing);
-        _character.animator.SetBool(DrawingBow, drawing);
+        SetPose(armScale, Math.Abs(armScale.x + 1) < 0.1f ? -5 : 5);
     }
 
-    private IEnumerator FireArrow()
-    {
-        _readyToFire = false;
-        _character.animator.SetBool(FiringBow, true);
-        _launcher.Launch(BaseForce);
-        yield return _bowStageWaitTime;
-        _character.animator.SetBool(FiringBow, false);
-        _character.StartCoroutine(ChargeBow());
-    }
-    
     public override void Exit()
     {
-        DisplayBow(false);
-        _character.characterMotor.ResumeMovement();
+        DisplayAndDrawBow(false);
         AdjustCamera?.Invoke(0, 3);
-        DrawBow?.Invoke(false);
         CameraShake.shakeCamera(0, 0);
+        _character.characterMotor.ResumeMovement();
+
     }
 }
