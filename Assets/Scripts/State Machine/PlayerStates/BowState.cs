@@ -143,10 +143,10 @@ public class BowState : State
     public override void Exit()
     {
         DisplayAndDrawBow(false);
+        _character.animator.SetBool(FiringBow, false);
         _character.StopAllCoroutines();
         AdjustCamera?.Invoke(0, 3);
         CameraShake.shakeCamera(0, 0);
         _character.characterMotor.ResumeMovement();
-
     }
 }
