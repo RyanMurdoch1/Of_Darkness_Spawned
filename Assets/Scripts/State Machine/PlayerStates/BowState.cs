@@ -76,12 +76,15 @@ public class BowState : State
         BowForce?.Invoke(0);
         CameraShake.shakeCamera(0.002f, 0.25f);
         yield return _bowStageWaitTime;
+        AudioController.playAudioClip(1);
         BowForce?.Invoke(1);
         CameraShake.shakeCamera(0.004f, 0.25f);
         yield return _bowStageWaitTime;
+        AudioController.playAudioClipWithPitch(1, 1.5f);
         CameraShake.shakeCamera(0.006f, 0.25f);
         BowForce?.Invoke(2);
         yield return _bowStageWaitTime;
+        AudioController.playAudioClipWithPitch(1, 2f);
         _readyToFire = true;
         BowForce?.Invoke(3);
     }
@@ -90,6 +93,7 @@ public class BowState : State
     {
         _readyToFire = false;
         _character.animator.SetBool(FiringBow, true);
+        AudioController.playAudioClipWithPitch(2, 0.75f);
         _launcher.Launch(BaseForce);
         yield return _bowStageWaitTime;
         _character.animator.SetBool(FiringBow, false);
@@ -139,6 +143,7 @@ public class BowState : State
     public override void Exit()
     {
         DisplayAndDrawBow(false);
+        _character.StopAllCoroutines();
         AdjustCamera?.Invoke(0, 3);
         CameraShake.shakeCamera(0, 0);
         _character.characterMotor.ResumeMovement();

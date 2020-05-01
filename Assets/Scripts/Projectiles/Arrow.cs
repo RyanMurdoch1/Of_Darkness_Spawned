@@ -13,6 +13,7 @@ public class Arrow : MonoBehaviour, IDealDamage
     {
         if (collisionObject.gameObject.CompareTag("Player") || _hitObject) return;
         _hitObject = true;
+        AudioController.playAudioClip(3);
         StartCoroutine(DisableDelay());
     }
 
