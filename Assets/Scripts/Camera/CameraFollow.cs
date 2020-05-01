@@ -22,6 +22,6 @@ public class CameraFollow : MonoBehaviour
 
     private void OnEnable()
     {
-        ShootingState.AdjustCamera += ReceiveAdjustmentValue;
+        BowState.AdjustCamera += ReceiveAdjustmentValue;
     }
 }

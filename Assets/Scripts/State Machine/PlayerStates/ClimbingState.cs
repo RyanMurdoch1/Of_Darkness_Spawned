@@ -2,28 +2,26 @@
 
 public class ClimbingState : State
 {
-    private readonly CharacterMotor _characterMotor;
     private float _verticalMovement;
-    private readonly CharacterController _characterMovement;
+    private readonly CharacterController _character;
     private readonly float _climbSpeed;
     private static readonly int Climbing = Animator.StringToHash("Climbing");
 
-    public ClimbingState(StateMachine stateMachine, CharacterMotor characterMotor, float climbSpeed, CharacterController characterMovement) : base(stateMachine)
+    public ClimbingState(float climbSpeed, CharacterController character)
     {
-        _characterMotor = characterMotor;
         _climbSpeed = climbSpeed;
-        _characterMovement = characterMovement;
+        _character = character;
     }
 
     public override void Enter()
     {
         base.Enter();
-        _characterMovement.animator.SetBool(Climbing, true);
+        _character.animator.SetBool(Climbing, true);
     }
 
     public override void Exit()
     {
-        _characterMovement.animator.SetBool(Climbing, false);
+        _character.animator.SetBool(Climbing, false);
     }
 
     public override void HandleInput()
@@ -32,12 +30,12 @@ public class ClimbingState : State
 
         if (Input.GetButtonDown("Jump"))
         {
-           StateMachine.ChangeState(_characterMovement.jumpingState);
+           _character.characterStateMachine.ChangeState(_character.jumpingState);
         }
     }
 
     public override void PhysicsUpdate()
     {
-        _characterMotor.MoveVertical(_verticalMovement);
+        _character.characterMotor.MoveVertical(_verticalMovement);
     }
 }

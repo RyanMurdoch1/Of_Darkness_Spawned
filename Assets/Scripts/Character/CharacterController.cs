@@ -36,19 +36,27 @@ public class CharacterController : MonoBehaviour
     private GameObject backBowArm;
     [BoxGroup("hideBowObjects/Bow Objects")] [SerializeField]
     private GameObject frontBowArm;
+    [BoxGroup("hideBowObjects/Bow Objects")] [SerializeField]
+    private GameObject arrow;
+    [BoxGroup("hideBowObjects/Bow Objects")] [SerializeField]
+    private Transform firePoint;
+    [BoxGroup("hideBowObjects/Bow Objects")] [SerializeField]
+    private ArrowLauncher launcher;
     #endregion
     
     public Animator animator;
-    private Rigidbody2D _playerRigidbody2D;
-    private StateMachine _characterStateMachine;
-    private CollisionChecker _collisionChecker;
-    private CharacterMotor _characterMotor;
-
+    public CharacterMotor characterMotor; 
+    public StateMachine characterStateMachine;
+    
     public StandingState standingState;
     public JumpingState jumpingState;
     public ClimbingState climbingState;
     public DamagedState damagedState;
-    public ShootingState shootingState;
+    public BowState shootingState;
+
+
+    private Rigidbody2D _playerRigidbody2D;
+    private CollisionChecker _collisionChecker;
 
     private void OnEnable()
     {
@@ -62,33 +70,33 @@ public class CharacterController : MonoBehaviour
 
     private void Start()
     {
-        _characterStateMachine = new StateMachine();
+        characterStateMachine = new StateMachine();
         _collisionChecker = new CollisionChecker(groundCheck, ceilingCheck, whatIsGround, this);
         _playerRigidbody2D = GetComponent<Rigidbody2D>();
-        _characterMotor = new CharacterMotor(this, _playerRigidbody2D, jumpForce, movementSmoothing);
-        standingState = new StandingState(_characterStateMachine, walkSpeed, _collisionChecker, _characterMotor, this);
-        jumpingState = new JumpingState(_characterStateMachine, airSpeed, _collisionChecker, _characterMotor, this);
-        climbingState = new ClimbingState(_characterStateMachine, _characterMotor, climbSpeed, this);
-        damagedState = new DamagedState(_characterStateMachine, this, _characterMotor);
-        shootingState = new ShootingState(_characterStateMachine, this, _characterMotor, frontBowArm, backBowArm);
+        characterMotor = new CharacterMotor(this, _playerRigidbody2D, jumpForce, movementSmoothing);
+        standingState = new StandingState(walkSpeed, _collisionChecker,this);
+        jumpingState = new JumpingState(airSpeed, _collisionChecker, this);
+        climbingState = new ClimbingState(climbSpeed, this);
+        damagedState = new DamagedState(this);
+        shootingState = new BowState(this, frontBowArm, backBowArm, launcher);
         
-        _characterStateMachine.Initialize(standingState);
+        characterStateMachine.Initialize(standingState);
     }
 
     private void TakeDamage(Vector2 damageDirection)
     {
         damagedState.damageDirection = damageDirection;
-        _characterStateMachine.ChangeState(damagedState);
+        characterStateMachine.ChangeState(damagedState);
     }
 
     private void Update()
     {
-        _characterStateMachine.currentState.HandleInput();
-        _characterStateMachine.currentState.LogicUpdate();
+        characterStateMachine.currentState.HandleInput();
+        characterStateMachine.currentState.LogicUpdate();
     }
 
     private void FixedUpdate()
     {
-        _characterStateMachine.currentState.PhysicsUpdate();
+        characterStateMachine.currentState.PhysicsUpdate();
     }
 }

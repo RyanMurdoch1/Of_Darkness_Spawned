@@ -207,12 +207,16 @@
           <e p="Objects" t="Include">
             <e p="Crate.cs" t="Include" />
           </e>
+          <e p="Projectiles" t="Include">
+            <e p="Arrow.cs" t="Include" />
+            <e p="ArrowLauncher.cs" t="Include" />
+          </e>
           <e p="State Machine" t="Include">
             <e p="PlayerStates" t="Include">
+              <e p="BowState.cs" t="Include" />
               <e p="ClimbingState.cs" t="Include" />
               <e p="DamagedState.cs" t="Include" />
               <e p="JumpingState.cs" t="Include" />
-              <e p="ShootingState.cs" t="Include" />
               <e p="StandingState.cs" t="Include" />
             </e>
             <e p="State.cs" t="Include" />

@@ -7,25 +7,23 @@ public class JumpingState : State
     private readonly float _airSpeed;
     private readonly CharacterController _character;
     private readonly CollisionChecker _collisionChecker;
-    private readonly CharacterMotor _characterMotor;
     private bool _isGrounded;
     private static readonly int Jumping = Animator.StringToHash("Jumping");
     private readonly WaitForSeconds _waitToClear = new WaitForSeconds(0.25f);
     private bool _clearedGround;
 
-    public JumpingState(StateMachine stateMachine, float airSpeed, CollisionChecker collisionChecker, CharacterMotor characterMotor, CharacterController character) : base(stateMachine)
+    public JumpingState(float airSpeed, CollisionChecker collisionChecker, CharacterController character) 
     {
         _airSpeed = airSpeed;
         _collisionChecker = collisionChecker;
         _character = character;
-        _characterMotor = characterMotor;
     }
 
     public override void Enter()
     {
         base.Enter();
         _clearedGround = false;
-        _characterMotor.Jump();
+        _character.characterMotor.Jump();
         _character.StartCoroutine(ClearGround());
         _character.animator.SetBool(Jumping, true);
     }
@@ -36,7 +34,7 @@ public class JumpingState : State
 
         if (_character.canClimb && Input.GetButtonDown("Climb"))
         {
-            StateMachine.ChangeState(_character.climbingState);
+            _character.characterStateMachine.ChangeState(_character.climbingState);
         }
     }
 
@@ -44,10 +42,10 @@ public class JumpingState : State
     {
         if (_collisionChecker.CheckForGround() && _clearedGround)
         {
-            StateMachine.ChangeState(_character.standingState);
+            _character.characterStateMachine.ChangeState(_character.standingState);
         }
         
-        _characterMotor.MoveHorizontal(_horizontalMovement);
+        _character.characterMotor.MoveHorizontal(_horizontalMovement);
     }
 
     public override void Exit()

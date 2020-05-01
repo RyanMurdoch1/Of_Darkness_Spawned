@@ -6,16 +6,14 @@ public class StandingState : State
     private readonly float _walkSpeed;
     private readonly CharacterController _character;
     private readonly CollisionChecker _collisionChecker;
-    private readonly CharacterMotor _characterMotor;
     private bool _isGrounded;
     private static readonly int Speed = Animator.StringToHash("Speed");
 
-    public StandingState(StateMachine stateMachine, float walkSpeed, CollisionChecker collisionChecker, CharacterMotor characterMotor, CharacterController character) : base(stateMachine)
+    public StandingState(float walkSpeed, CollisionChecker collisionChecker, CharacterController character)
     {
+        _character = character;
         _walkSpeed = walkSpeed;
         _collisionChecker = collisionChecker;
-        _character = character;
-        _characterMotor = characterMotor;
     }
 
     public override void HandleInput()
@@ -25,23 +23,23 @@ public class StandingState : State
         
         if (Input.GetButtonDown("Jump") && _isGrounded)
         {
-            StateMachine.ChangeState(_character.jumpingState);
+            _character.characterStateMachine.ChangeState(_character.jumpingState);
         }
         
         if (_character.canClimb && Input.GetButtonDown("Climb"))
         {
-            StateMachine.ChangeState(_character.climbingState);
+            _character.characterStateMachine.ChangeState(_character.climbingState);
         }
 
         if (Input.GetKeyDown(KeyCode.F) && _isGrounded)
         {
-            StateMachine.ChangeState(_character.shootingState);
+            _character.characterStateMachine.ChangeState(_character.shootingState);
         }
     }
 
     public override void PhysicsUpdate()
     {
         _isGrounded = _collisionChecker.CheckForGround();
-        _characterMotor.MoveHorizontal(_horizontalMovement);
+        _character.characterMotor.MoveHorizontal(_horizontalMovement);
     }
 }

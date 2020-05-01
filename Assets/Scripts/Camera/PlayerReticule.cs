@@ -12,14 +12,14 @@ public class PlayerReticule : MonoBehaviour
     private void Awake()
     {
         Cursor.visible = false;
-        ShootingState.DrawBow += BowDrawn;
-        ShootingState.BowForce += BowCharge;
+        BowState.DrawBow += BowDrawn;
+        BowState.BowForce += BowCharge;
     }
 
     private void OnDisable()
     {
-        ShootingState.DrawBow -= BowDrawn;
-        ShootingState.BowForce -= BowCharge;
+        BowState.DrawBow -= BowDrawn;
+        BowState.BowForce -= BowCharge;
     }
 
     private void Update()
