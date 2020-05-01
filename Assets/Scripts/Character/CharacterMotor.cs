@@ -5,7 +5,7 @@
 /// </summary>
 public class CharacterMotor
 {
-    private bool _facingRight;
+    public bool FacingRight;
     private readonly CharacterController _characterMovement;
     private readonly Rigidbody2D _rigidbody2D;
     private readonly float _smoothingValue;
@@ -26,21 +26,31 @@ public class CharacterMotor
 
         _rigidbody2D.velocity = Vector3.SmoothDamp(_rigidbody2D.velocity, targetVelocity, ref _velocity, _smoothingValue);
 
-        if (moveValue > 0 && !_facingRight)
+        if (moveValue > 0 && !FacingRight)
         {
             Flip();
         }
-        else if (moveValue < 0 && _facingRight)
+        else if (moveValue < 0 && FacingRight)
         {
             Flip();
         }
     }
 
+    private void StopMovement() => _rigidbody2D.velocity = Vector2.zero;
+    
+    public void FreezeMovement()
+    {
+        _rigidbody2D.isKinematic = true;
+        _rigidbody2D.velocity = Vector2.zero;
+    }
+
+    public void ResumeMovement() => _rigidbody2D.isKinematic = false;
+
     public void TakeDamage(Vector2 damageDirection)
     {
         var dir = damageDirection - new Vector2(_characterMovement.gameObject.transform.localPosition.x, _characterMovement.gameObject.transform.localPosition.y);
         dir = dir.normalized;
-        _rigidbody2D.velocity = Vector2.zero;
+        StopMovement();
         _rigidbody2D.AddForce(-dir * 6f, ForceMode2D.Impulse);
     }
 
@@ -51,14 +61,11 @@ public class CharacterMotor
         _rigidbody2D.velocity = Vector3.SmoothDamp(_rigidbody2D.velocity, targetVelocity, ref _velocity, _smoothingValue);
     }
 
-    public void Jump()
-    {
-        _rigidbody2D.AddForce(new Vector2(0f, _jumpForce));
-    }
+    public void Jump() => _rigidbody2D.AddForce(new Vector2(0f, _jumpForce));
     
-    private void Flip()
+    public void Flip()
     {
-        _facingRight = !_facingRight;
+        FacingRight = !FacingRight;
         var theScale = _characterMovement.gameObject.transform.localScale;
         theScale.x *= -1;
         _characterMovement.gameObject.transform.localScale = theScale;

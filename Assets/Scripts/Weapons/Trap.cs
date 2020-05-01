@@ -2,6 +2,11 @@
 
 public class Trap : MonoBehaviour, IDealDamage
 {
-    [SerializeField] private int damageToDeal;
-    public int damageAmount => damageToDeal;
+    public Trap(int damageAmount)
+    {
+        this.damageAmount = damageAmount;
+    }
+
+    [field: SerializeField]
+    public int damageAmount { get; }
 }
