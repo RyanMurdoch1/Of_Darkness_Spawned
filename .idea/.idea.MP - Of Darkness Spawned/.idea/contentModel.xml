@@ -196,10 +196,18 @@
           </e>
           <e p="Character" t="Include">
             <e p="CharacterController.cs" t="Include" />
+            <e p="CharacterInventory.cs" t="Include" />
             <e p="CharacterMotor.cs" t="Include" />
             <e p="CollisionChecker.cs" t="Include" />
             <e p="PlayerInteraction.cs" t="Include" />
             <e p="PlayerStatsDisplay.cs" t="Include" />
+          </e>
+          <e p="Collectables" t="Include">
+            <e p="Collectable.cs" t="Include" />
+            <e p="CollectableDropper.cs" t="Include" />
+            <e p="CollectablePool.cs" t="Include" />
+            <e p="CollectableType.cs" t="Include" />
+            <e p="ICollectable.cs" t="Include" />
           </e>
           <e p="Health" t="Include">
             <e p="CharacterHealth.cs" t="Include" />

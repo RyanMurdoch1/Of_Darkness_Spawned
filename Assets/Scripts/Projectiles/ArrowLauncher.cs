@@ -24,6 +24,4 @@ public class ArrowLauncher : MonoBehaviour
         arrowToFire.arrowRigidbody.velocity = transform.right * force;
         _arrowQueue.Enqueue(positionInQueue);
     }
-    
-    
 }

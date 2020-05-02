@@ -7,9 +7,9 @@ public class AudioFileObject : ScriptableObject
     public AudioType audioType;
     public AudioClip clip;
     [Range(0, 1)]
-    public float volume;
+    public float volume = 1;
     [Range(0, 2)]
-    public float pitch;
+    public float pitch = 1;
 }
 
 public enum AudioType
