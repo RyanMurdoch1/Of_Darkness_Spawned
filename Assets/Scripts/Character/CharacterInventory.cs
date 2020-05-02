@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterInventory : MonoBehaviour
 {
     public Dictionary<CollectableType, int> collectables;
+    public static event Action<CollectableType, int> CollectableNumberUpdated; 
     
     private void OnEnable()
     {
@@ -24,6 +26,7 @@ public class CharacterInventory : MonoBehaviour
             collectables.Add(collectableType, value);
         }
         
+        CollectableNumberUpdated?.Invoke(collectableType, collectables[collectableType]);
         Debug.Log($"Collected {value.ToString()} {collectableType}");
     }
 }

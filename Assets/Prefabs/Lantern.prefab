@@ -982,8 +982,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3035193525958931848}
   - component: {fileID: 3035193525958931862}
-  - component: {fileID: 3035193525958931861}
   - component: {fileID: 3035193525958931863}
+  - component: {fileID: 7938654437992697092}
   - component: {fileID: 3035193525958931860}
   m_Layer: 0
   m_Name: Lantern
@@ -1056,20 +1056,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3035193525958931861
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3035193525958931849}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d12a6d03070af394bba04ece31a1848a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 1
-  spriteRenderer: {fileID: 3035193525958931862}
 --- !u!61 &3035193525958931863
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1096,6 +1082,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.16, y: 0.16}
   m_EdgeRadius: 0
+--- !u!114 &7938654437992697092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3035193525958931849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 063b1ea6f8c7bc04aa3f54b22b3abffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 3035193525958931862}
+  collectableDropper: {fileID: 3035193525958931860}
 --- !u!114 &3035193525958931860
 MonoBehaviour:
   m_ObjectHideFlags: 0

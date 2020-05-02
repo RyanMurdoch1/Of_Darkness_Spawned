@@ -211,13 +211,16 @@
           </e>
           <e p="Health" t="Include">
             <e p="CharacterHealth.cs" t="Include" />
+            <e p="DamageReceiver.cs" t="Include" />
             <e p="ITakeDamage.cs" t="Include" />
           </e>
           <e p="Misc" t="Include">
             <e p="CrowFlyController.cs" t="Include" />
           </e>
           <e p="Objects" t="Include">
-            <e p="EnvironmentDestructable.cs" t="Include" />
+            <e p="Crate.cs" t="Include" />
+            <e p="DestructableObject.cs" t="Include" />
+            <e p="Lantern.cs" t="Include" />
           </e>
           <e p="Projectiles" t="Include">
             <e p="Arrow.cs" t="Include" />

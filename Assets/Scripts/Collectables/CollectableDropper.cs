@@ -7,7 +7,7 @@ public class CollectableDropper : MonoBehaviour
     [MinMaxSlider(0, 5, true)]
     [SerializeField] private Vector2 dropRange;
 
-    private void OnDisable()
+    public void Drop()
     {
         var dropNumber = Random.Range(dropRange.x + 1, dropRange.y + 1);
         for (var i = 0; i < dropNumber; i++)
