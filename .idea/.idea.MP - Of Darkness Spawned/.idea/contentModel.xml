@@ -9,7 +9,6 @@
       <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
-        <e p="AudioController.cs" t="Include" />
         <e p="Editor" t="Include">
           <e p="--HotKeys" t="Include">
             <e p="WorkFlowHotkeys.cs" t="Include" />
@@ -186,6 +185,10 @@
           </e>
         </e>
         <e p="Scripts" t="Include">
+          <e p="Audio" t="Include">
+            <e p="AudioController.cs" t="Include" />
+            <e p="AudioFileObject.cs" t="Include" />
+          </e>
           <e p="Camera" t="Include">
             <e p="CameraFollow.cs" t="Include" />
             <e p="CameraShake.cs" t="Include" />

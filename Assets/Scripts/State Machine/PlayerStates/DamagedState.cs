@@ -14,7 +14,7 @@ public class DamagedState : State
     public override void Enter()
     {
         base.Enter();
-        AudioController.playAudioClipWithPitch(0, 0.5f);
+        AudioController.playAudioFile("Hit");
         _character.animator.SetBool(Damaged, true);
         _character.characterMotor.TakeDamage(damageDirection);
         _character.StartCoroutine(DamageLock());

@@ -51,7 +51,7 @@ public class BowState : State
     
     public override void HandleInput()
     {
-        if (Input.GetKeyDown(KeyCode.F) && _readyToFire)
+        if (Input.GetKeyDown(KeyCode.F) && _readyToFire || Input.GetMouseButtonDown(0) && _readyToFire)
         {
             _character.StopAllCoroutines();
             _character.StartCoroutine(FireArrow());
@@ -76,15 +76,15 @@ public class BowState : State
         BowForce?.Invoke(0);
         CameraShake.shakeCamera(0.002f, 0.25f);
         yield return _bowStageWaitTime;
-        AudioController.playAudioClip(1);
+        AudioController.playAudioFile("Tick");
         BowForce?.Invoke(1);
         CameraShake.shakeCamera(0.004f, 0.25f);
         yield return _bowStageWaitTime;
-        AudioController.playAudioClipWithPitch(1, 1.5f);
+        AudioController.playAudioFile("Tick");
         CameraShake.shakeCamera(0.006f, 0.25f);
         BowForce?.Invoke(2);
         yield return _bowStageWaitTime;
-        AudioController.playAudioClipWithPitch(1, 2f);
+        AudioController.playAudioFile("Tick");
         _readyToFire = true;
         BowForce?.Invoke(3);
     }
@@ -92,8 +92,8 @@ public class BowState : State
     private IEnumerator FireArrow()
     {
         _readyToFire = false;
+        AudioController.playAudioFile("Fire Bow");
         _character.animator.SetBool(FiringBow, true);
-        AudioController.playAudioClipWithPitch(2, 0.75f);
         _launcher.Launch(BaseForce);
         yield return _bowStageWaitTime;
         _character.animator.SetBool(FiringBow, false);
