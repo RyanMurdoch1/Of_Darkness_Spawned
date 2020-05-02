@@ -185,6 +185,10 @@
           </e>
         </e>
         <e p="Scripts" t="Include">
+          <e p="Audio" t="Include">
+            <e p="AudioController.cs" t="Include" />
+            <e p="AudioFileObject.cs" t="Include" />
+          </e>
           <e p="Camera" t="Include">
             <e p="CameraFollow.cs" t="Include" />
             <e p="CameraShake.cs" t="Include" />
@@ -205,7 +209,7 @@
             <e p="CrowFlyController.cs" t="Include" />
           </e>
           <e p="Objects" t="Include">
-            <e p="Crate.cs" t="Include" />
+            <e p="EnvironmentDestructable.cs" t="Include" />
           </e>
           <e p="Projectiles" t="Include">
             <e p="Arrow.cs" t="Include" />
