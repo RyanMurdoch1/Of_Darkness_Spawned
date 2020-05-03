@@ -3,16 +3,18 @@ using UnityEngine;
 
 public class JumpingState : State
 {
+    #region Variables
     private float _horizontalMovement;
     private readonly float _airSpeed;
-    private readonly CharacterController _character;
+    private readonly PlayerCharacter _character;
     private readonly CollisionChecker _collisionChecker;
     private bool _isGrounded;
     private static readonly int Jumping = Animator.StringToHash("Jumping");
     private readonly WaitForSeconds _waitToClear = new WaitForSeconds(0.25f);
     private bool _clearedGround;
+    #endregion
 
-    public JumpingState(float airSpeed, CollisionChecker collisionChecker, CharacterController character) 
+    public JumpingState(float airSpeed, CollisionChecker collisionChecker, PlayerCharacter character) 
     {
         _airSpeed = airSpeed;
         _collisionChecker = collisionChecker;

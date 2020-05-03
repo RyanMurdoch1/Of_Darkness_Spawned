@@ -8,11 +8,11 @@ public class CollisionChecker
     private readonly Transform _groundCheck;
     private const float CheckRadius = 0.2f;
     private readonly LayerMask _whatIsGround;
-    private readonly CharacterController _characterMovement;
+    private readonly PlayerCharacter _characterMovement;
     private readonly Collider2D[] _colliders2D = new Collider2D[10];
     private readonly Collider2D _nullCollider;
 
-    public CollisionChecker(Transform groundCheck, LayerMask whatIsGround, CharacterController characterMovement)
+    public CollisionChecker(Transform groundCheck, LayerMask whatIsGround, PlayerCharacter characterMovement)
     {
         _groundCheck = groundCheck;
         _whatIsGround = whatIsGround;

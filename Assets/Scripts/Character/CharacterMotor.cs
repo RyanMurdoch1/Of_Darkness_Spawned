@@ -6,13 +6,13 @@
 public class CharacterMotor
 {
     public bool FacingRight;
-    private readonly CharacterController _characterMovement;
+    private readonly PlayerCharacter _characterMovement;
     private readonly Rigidbody2D _rigidbody2D;
     private readonly float _smoothingValue;
     private readonly float _jumpForce;
     private Vector3 _velocity = Vector3.zero;
 
-    public CharacterMotor(CharacterController character, Rigidbody2D rigidbody2D, float jumpForce, float smoothingValue)
+    public CharacterMotor(PlayerCharacter character, Rigidbody2D rigidbody2D, float jumpForce, float smoothingValue)
     {
         _characterMovement = character;
         _rigidbody2D = rigidbody2D;
@@ -36,8 +36,11 @@ public class CharacterMotor
         }
     }
 
-    private void StopMovement() => _rigidbody2D.velocity = Vector2.zero;
-    
+    private void StopMovement()
+    {
+        _rigidbody2D.velocity = Vector2.zero;
+    }
+
     public void FreezeMovement()
     {
         _rigidbody2D.isKinematic = true;

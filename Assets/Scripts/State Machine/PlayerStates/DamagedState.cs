@@ -6,16 +6,17 @@ public class DamagedState : State
 {
     private readonly WaitForSeconds _lockTime = new WaitForSeconds(0.5f);
     public Vector2 damageDirection;
-    private readonly CharacterController _character;
+    private readonly PlayerCharacter _character;
     private static readonly int Damaged = Animator.StringToHash("Damaged");
 
-    public DamagedState(CharacterController character) => _character = character;
+    public DamagedState(PlayerCharacter character) => _character = character;
     
     public override void Enter()
     {
         base.Enter();
         AudioController.playAudioFile("Hit");
         _character.animator.SetBool(Damaged, true);
+        _character.characterMotor.ResumeMovement();
         _character.characterMotor.TakeDamage(damageDirection);
         _character.StartCoroutine(DamageLock());
     }

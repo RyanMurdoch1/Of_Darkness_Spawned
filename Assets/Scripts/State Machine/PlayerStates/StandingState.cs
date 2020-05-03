@@ -1,15 +1,18 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class StandingState : State
 {
+    private const float MovementTolerance = 0.01f;
     private float _horizontalMovement;
     private readonly float _walkSpeed;
-    private readonly CharacterController _character;
+    private readonly PlayerCharacter _character;
     private readonly CollisionChecker _collisionChecker;
     private bool _isGrounded;
     private static readonly int Speed = Animator.StringToHash("Speed");
+    private bool _movementStopped;
 
-    public StandingState(float walkSpeed, CollisionChecker collisionChecker, CharacterController character)
+    public StandingState(float walkSpeed, CollisionChecker collisionChecker, PlayerCharacter character)
     {
         _character = character;
         _walkSpeed = walkSpeed;
@@ -23,23 +26,37 @@ public class StandingState : State
         
         if (Input.GetButtonDown("Jump") && _isGrounded)
         {
-            _character.characterStateMachine.ChangeState(_character.jumpingState);
+            ChangeState(_character.jumpingState);
         }
         
         if (_character.canClimb && Input.GetButtonDown("Climb"))
         {
-            _character.characterStateMachine.ChangeState(_character.climbingState);
+            ChangeState(_character.climbingState);
         }
 
-        if (Input.GetKeyDown(KeyCode.F) && _isGrounded)
+        if (Input.GetButtonDown($"Draw Bow") && _isGrounded)
         {
-            _character.characterStateMachine.ChangeState(_character.shootingState);
+            ChangeState(_character.shootingState);
         }
+    }
+
+    private void ChangeState(State playerState)
+    {
+        _character.characterMotor.ResumeMovement();
+        _character.characterStateMachine.ChangeState(playerState);
     }
 
     public override void PhysicsUpdate()
     {
         _isGrounded = _collisionChecker.CheckForGround();
         _character.characterMotor.MoveHorizontal(_horizontalMovement);
+        if (Math.Abs(_horizontalMovement) < MovementTolerance && _isGrounded)
+        {
+            _character.characterMotor.FreezeMovement();
+        }
+        else
+        {
+            _character.characterMotor.ResumeMovement();
+        }
     }
 }

@@ -3,14 +3,17 @@
 public class ClimbingState : State
 {
     private float _verticalMovement;
-    private readonly CharacterController _character;
+    private readonly PlayerCharacter _character;
     private readonly float _climbSpeed;
     private static readonly int Climbing = Animator.StringToHash("Climbing");
-
-    public ClimbingState(float climbSpeed, CharacterController character)
+    private readonly CollisionChecker _collisionChecker;
+    private bool _isGrounded;
+    
+    public ClimbingState(float climbSpeed, PlayerCharacter character, CollisionChecker collisionChecker)
     {
         _climbSpeed = climbSpeed;
         _character = character;
+        _collisionChecker = collisionChecker;
     }
 
     public override void Enter()
@@ -27,9 +30,18 @@ public class ClimbingState : State
         {
            _character.characterStateMachine.ChangeState(_character.jumpingState);
         }
+
+        if (_isGrounded && Input.GetKey(KeyCode.S))
+        {
+            _character.characterStateMachine.ChangeState(_character.standingState);
+        }
     }
 
-    public override void PhysicsUpdate() => _character.characterMotor.MoveVertical(_verticalMovement);
-    
+    public override void PhysicsUpdate()
+    {
+        _character.characterMotor.MoveVertical(_verticalMovement);
+        _isGrounded = _collisionChecker.CheckForGround();
+    }
+
     public override void Exit() => _character.animator.SetBool(Climbing, false);
 }

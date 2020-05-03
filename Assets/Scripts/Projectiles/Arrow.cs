@@ -1,26 +1,17 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Arrow : MonoBehaviour, IDealDamage
+public class Arrow : Projectile
 {
-    [SerializeField] private int damageToDeal;
-    public int damageAmount => damageToDeal;
-    public Rigidbody2D arrowRigidbody;
-    private readonly WaitForSeconds _waitForSeconds = new WaitForSeconds(0.05f);
-    private bool _hitObject;
-
-    private void OnCollisionEnter2D(Collision2D collisionObject)
+    protected override void SetDamageAmount()
     {
-        if (collisionObject.gameObject.CompareTag("Player") || _hitObject) return;
-        _hitObject = true;
-        AudioController.playAudioFile("Hit");
-        StartCoroutine(DisableDelay());
+        damageAmount = 1;
     }
 
-    private IEnumerator DisableDelay()
+    protected override void OnCollisionEnter2D(Collision2D collisionObject)
     {
-        yield return _waitForSeconds;
-        gameObject.SetActive(false);
-        _hitObject = false;
+        if (collisionObject.gameObject.CompareTag("Player") || hitObject) return;
+        hitObject = true;
+        AudioController.playAudioFile("Hit");
+        StartCoroutine(DisableDelay());
     }
 }

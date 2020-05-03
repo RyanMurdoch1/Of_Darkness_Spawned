@@ -3,5 +3,5 @@
 /// </summary>
 public interface IDealDamage
 {
-    int damageAmount { get; }
+    int damageAmount { get; set; }
 }

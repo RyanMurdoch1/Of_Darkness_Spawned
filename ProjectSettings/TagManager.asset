@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Climbable
   - Weapon
+  - Collectable
+  - Health
   layers:
   - Default
   - TransparentFX

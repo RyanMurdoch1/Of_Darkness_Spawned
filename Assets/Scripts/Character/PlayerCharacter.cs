@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 /// <summary>
 /// Handles player movement and state
 /// </summary>
-public class CharacterController : MonoBehaviour
+public class PlayerCharacter : MonoBehaviour
 {
     #region Variables
     [SerializeField] private bool hideSpeedVariables = true;
@@ -35,7 +35,7 @@ public class CharacterController : MonoBehaviour
     [BoxGroup("hideBowObjects/Bow Objects")] [SerializeField]
     private GameObject frontBowArm;
     [BoxGroup("hideBowObjects/Bow Objects")] [SerializeField]
-    private ArrowLauncher launcher;
+    private ProjectileLauncher launcher;
     #endregion
     
     public Animator animator;
@@ -63,7 +63,7 @@ public class CharacterController : MonoBehaviour
         characterMotor = new CharacterMotor(this, _playerRigidbody2D, jumpForce, movementSmoothing);
         standingState = new StandingState(walkSpeed, _collisionChecker,this);
         jumpingState = new JumpingState(airSpeed, _collisionChecker, this);
-        climbingState = new ClimbingState(climbSpeed, this);
+        climbingState = new ClimbingState(climbSpeed, this, _collisionChecker);
         damagedState = new DamagedState(this);
         shootingState = new BowState(this, frontBowArm, backBowArm, launcher);
         

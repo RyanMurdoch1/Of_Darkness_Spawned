@@ -10,9 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2631833900054226003}
   - component: {fileID: 2870724273602836770}
+  - component: {fileID: 8818039665909311381}
+  - component: {fileID: 4960367235563053054}
+  - component: {fileID: 3168304874490729857}
   - component: {fileID: 2115416570}
   - component: {fileID: 1748758952}
-  - component: {fileID: 8688965307078979031}
   m_Layer: 0
   m_Name: Crate
   m_TagString: Untagged
@@ -85,6 +87,51 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8818039665909311381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3507432962757074972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03dc1bdefd9055c41966c2e192488d7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 2870724273602836770}
+  collectableDroppers:
+  - {fileID: 3168304874490729857}
+  - {fileID: 4960367235563053054}
+  damagedSprite: {fileID: 21300000, guid: 99fcafbc472a43b45bf87157a3158351, type: 3}
+--- !u!114 &4960367235563053054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3507432962757074972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5b60da26ac374c4fb8423b05cc214b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectableType: 0
+  dropRange: {x: 0, y: 3}
+--- !u!114 &3168304874490729857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3507432962757074972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5b60da26ac374c4fb8423b05cc214b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectableType: 2
+  dropRange: {x: 0, y: 1}
 --- !u!61 &2115416570
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -132,17 +179,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &8688965307078979031
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3507432962757074972}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d12a6d03070af394bba04ece31a1848a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 2
-  spriteRenderer: {fileID: 2870724273602836770}
