@@ -31,7 +31,7 @@ public class StandingState : State
             _character.characterStateMachine.ChangeState(_character.climbingState);
         }
 
-        if (Input.GetKeyDown(KeyCode.F) && _isGrounded)
+        if (Input.GetButtonDown($"Draw Bow") && _isGrounded)
         {
             _character.characterStateMachine.ChangeState(_character.shootingState);
         }

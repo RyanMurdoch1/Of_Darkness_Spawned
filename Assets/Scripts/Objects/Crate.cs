@@ -9,7 +9,6 @@ public class Crate : DestructableObject
     protected override void SetHealth()
     {
         health = HealthValue;
-        Debug.Log(health.ToString());
     }
 
     protected override void OnDamaged()

@@ -5,6 +5,7 @@ public class DamageReceiver
 {
     private readonly ITakeDamage _damageReceiver;
     private readonly SpriteRenderer _spriteRenderer;
+    private readonly WaitForSeconds _flashWaitTime = new WaitForSeconds(0.125f);
     
     public DamageReceiver(ITakeDamage damageReceiver, SpriteRenderer spriteRenderer)
     {
@@ -14,26 +15,27 @@ public class DamageReceiver
     
     public IEnumerator TakeDamage()
     {
-        _spriteRenderer.enabled = false;
-        yield return new WaitForSeconds(0.125f);
-        _spriteRenderer.enabled = true;
-        yield return new WaitForSeconds(0.125f);
-        _spriteRenderer.enabled = false;
-        yield return new WaitForSeconds(0.125f);
-        _spriteRenderer.enabled = true;
-        yield return new WaitForSeconds(0.125f);
+        for (var i = 0; i < 2; i++)
+        {
+            yield return Flash();
+        }
     }
-
+    
     public IEnumerator TakeDamageAndDie()
     {
-        _spriteRenderer.enabled = false;
-        yield return new WaitForSeconds(0.125f);
-        _spriteRenderer.enabled = true;
-        yield return new WaitForSeconds(0.125f);
-        _spriteRenderer.enabled = false;
-        yield return new WaitForSeconds(0.125f);
-        _spriteRenderer.enabled = true;
-        yield return new WaitForSeconds(0.125f);
+        for (var i = 0; i < 2; i++)
+        {
+            yield return Flash();
+        }
+        
         _damageReceiver.Perish();
+    }
+    
+    private IEnumerator Flash()
+    {
+        _spriteRenderer.enabled = false;
+        yield return _flashWaitTime;
+        _spriteRenderer.enabled = true;
+        yield return _flashWaitTime; 
     }
 }

@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class JumpingState : State
 {
+    #region Variables
     private float _horizontalMovement;
     private readonly float _airSpeed;
     private readonly CharacterController _character;
@@ -11,6 +12,7 @@ public class JumpingState : State
     private static readonly int Jumping = Animator.StringToHash("Jumping");
     private readonly WaitForSeconds _waitToClear = new WaitForSeconds(0.25f);
     private bool _clearedGround;
+    #endregion
 
     public JumpingState(float airSpeed, CollisionChecker collisionChecker, CharacterController character) 
     {

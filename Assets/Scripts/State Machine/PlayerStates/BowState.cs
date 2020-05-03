@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BowState : State
 {
+    #region Variables
     private readonly GameObject _frontArm;
     private readonly GameObject _backArm;
     private readonly ArrowLauncher _launcher;
@@ -11,6 +12,7 @@ public class BowState : State
     private float _bowForce;
     private const float BaseForce = 15f;
     private const float ArmScaleAdjustment = 5f;
+    private const float MovementThreshold = 0.1f;
     private static readonly int DrawingBow = Animator.StringToHash("DrawingBow");
     private static readonly int FiringBow = Animator.StringToHash("FiringBow");
     private readonly Vector2 _leftScale = new Vector2(-1, 1);
@@ -22,6 +24,7 @@ public class BowState : State
     public static event Action<int> BowForce;
     private readonly WaitForSeconds _bowStageWaitTime = new WaitForSeconds(0.25f);
     private bool _readyToFire;
+    #endregion
 
     public BowState(CharacterController character, GameObject frontArm, GameObject backArm, ArrowLauncher launcher)
     {
@@ -43,7 +46,6 @@ public class BowState : State
         {
             SetPose(_leftScale, -ArmScaleAdjustment);
         }
-
         DisplayAndDrawBow(true);
         _character.characterMotor.FreezeMovement();
         _character.StartCoroutine(ChargeBow());
@@ -51,18 +53,18 @@ public class BowState : State
     
     public override void HandleInput()
     {
-        if (Input.GetKeyDown(KeyCode.F) && _readyToFire || Input.GetMouseButtonDown(0) && _readyToFire)
+        if (Input.GetButtonDown($"Attack") && _readyToFire)
         {
             _character.StopAllCoroutines();
             _character.StartCoroutine(FireArrow());
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetButtonDown("Jump"))
         {
             _character.characterStateMachine.ChangeState(_character.jumpingState);
         }
 
-        if (Math.Abs(Input.GetAxisRaw("Horizontal")) > 0.1f)
+        if (Math.Abs(Input.GetAxisRaw("Horizontal")) > MovementThreshold)
         {
             _character.characterStateMachine.ChangeState(_character.standingState);
         }
@@ -74,19 +76,19 @@ public class BowState : State
     {
         _readyToFire = false;
         BowForce?.Invoke(0);
-        CameraShake.shakeCamera(0.002f, 0.25f);
-        yield return _bowStageWaitTime;
-        AudioController.playAudioFile("Tick");
-        BowForce?.Invoke(1);
+        for (var i = 1; i < 4; i++)
+        {
+            yield return ChargeStep(i);
+        }
+        _readyToFire = true;
+    }
+
+    private IEnumerator ChargeStep(int step)
+    {
         CameraShake.shakeCamera(0.004f, 0.25f);
         yield return _bowStageWaitTime;
         AudioController.playAudioFile("Tick");
-        CameraShake.shakeCamera(0.006f, 0.25f);
-        BowForce?.Invoke(2);
-        yield return _bowStageWaitTime;
-        AudioController.playAudioFile("Tick");
-        _readyToFire = true;
-        BowForce?.Invoke(3);
+        BowForce?.Invoke(step);
     }
     
     private IEnumerator FireArrow()
