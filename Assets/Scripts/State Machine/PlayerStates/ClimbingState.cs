@@ -3,13 +3,13 @@
 public class ClimbingState : State
 {
     private float _verticalMovement;
-    private readonly CharacterController _character;
+    private readonly PlayerCharacter _character;
     private readonly float _climbSpeed;
     private static readonly int Climbing = Animator.StringToHash("Climbing");
     private readonly CollisionChecker _collisionChecker;
     private bool _isGrounded;
     
-    public ClimbingState(float climbSpeed, CharacterController character, CollisionChecker collisionChecker)
+    public ClimbingState(float climbSpeed, PlayerCharacter character, CollisionChecker collisionChecker)
     {
         _climbSpeed = climbSpeed;
         _character = character;

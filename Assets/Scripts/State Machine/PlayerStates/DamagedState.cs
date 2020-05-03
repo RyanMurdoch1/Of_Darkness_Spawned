@@ -6,10 +6,10 @@ public class DamagedState : State
 {
     private readonly WaitForSeconds _lockTime = new WaitForSeconds(0.5f);
     public Vector2 damageDirection;
-    private readonly CharacterController _character;
+    private readonly PlayerCharacter _character;
     private static readonly int Damaged = Animator.StringToHash("Damaged");
 
-    public DamagedState(CharacterController character) => _character = character;
+    public DamagedState(PlayerCharacter character) => _character = character;
     
     public override void Enter()
     {

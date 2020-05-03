@@ -4,12 +4,12 @@ public class StandingState : State
 {
     private float _horizontalMovement;
     private readonly float _walkSpeed;
-    private readonly CharacterController _character;
+    private readonly PlayerCharacter _character;
     private readonly CollisionChecker _collisionChecker;
     private bool _isGrounded;
     private static readonly int Speed = Animator.StringToHash("Speed");
 
-    public StandingState(float walkSpeed, CollisionChecker collisionChecker, CharacterController character)
+    public StandingState(float walkSpeed, CollisionChecker collisionChecker, PlayerCharacter character)
     {
         _character = character;
         _walkSpeed = walkSpeed;

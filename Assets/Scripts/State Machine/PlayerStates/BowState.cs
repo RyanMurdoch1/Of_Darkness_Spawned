@@ -7,8 +7,8 @@ public class BowState : State
     #region Variables
     private readonly GameObject _frontArm;
     private readonly GameObject _backArm;
-    private readonly ArrowLauncher _launcher;
-    private readonly CharacterController _character;
+    private readonly ProjectileLauncher _launcher;
+    private readonly PlayerCharacter _character;
     private float _bowForce;
     private const float BaseForce = 15f;
     private const float ArmScaleAdjustment = 5f;
@@ -26,7 +26,7 @@ public class BowState : State
     private bool _readyToFire;
     #endregion
 
-    public BowState(CharacterController character, GameObject frontArm, GameObject backArm, ArrowLauncher launcher)
+    public BowState(PlayerCharacter character, GameObject frontArm, GameObject backArm, ProjectileLauncher launcher)
     {
         _character = character;
         _frontArm = frontArm;

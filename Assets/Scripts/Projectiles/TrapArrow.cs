@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Arrow : Projectile
+public class TrapArrow : Projectile
 {
     protected override void SetDamageAmount()
     {
@@ -9,7 +9,7 @@ public class Arrow : Projectile
 
     protected override void OnCollisionEnter2D(Collision2D collisionObject)
     {
-        if (collisionObject.gameObject.CompareTag("Player") || hitObject) return;
+        if (hitObject) return;
         hitObject = true;
         AudioController.playAudioFile("Hit");
         StartCoroutine(DisableDelay());

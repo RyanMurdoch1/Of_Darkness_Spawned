@@ -10,16 +10,16 @@ public class PlayerStatsDisplay : MonoBehaviour
     [SerializeField] private TextMeshProUGUI healthText;
     [SerializeField] private TextMeshProUGUI amuletText;
 
-    private void OnEnable()
+    private void Awake()
     {
         CharacterHealth.HealthChanged += SetHealth;
-        CharacterInventory.CollectableNumberUpdated += CheckCollectables;
+        InventoryItem.CollectableNumberUpdated += CheckCollectables;
     }
 
     private void OnDisable()
     {
         CharacterHealth.HealthChanged -= SetHealth;
-        CharacterInventory.CollectableNumberUpdated -= CheckCollectables;
+        InventoryItem.CollectableNumberUpdated -= CheckCollectables;
     }
 
     private void CheckCollectables(CollectableType collectableType, int value)

@@ -1,32 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CharacterInventory : MonoBehaviour
 {
-    public Dictionary<CollectableType, int> collectables;
-    public static event Action<CollectableType, int> CollectableNumberUpdated; 
+    public InventoryObject inventory;
     
     private void OnEnable()
     {
-        collectables = new Dictionary<CollectableType, int>();
+        Invoke(nameof(SetStartingInventory), 0.25f);
         PlayerInteraction.PickedUpItem += AddCollectableToInventory;
+    }
+
+    private void SetStartingInventory()
+    {
+        for (var i = 0; i < inventory.inventoryItems.Count; i++)
+        {
+            inventory.inventoryItems[i].quantity = inventory.inventoryItems[i].exposedQuantity;
+        }
     }
 
     private void OnDisable() => PlayerInteraction.PickedUpItem += AddCollectableToInventory;
 
     private void AddCollectableToInventory(CollectableType collectableType, int value)
     {
-        if (collectables.ContainsKey(collectableType))
+        for (var i = 0; i < inventory.inventoryItems.Count; i++)
         {
-            collectables[collectableType] += value;
-        }
-        else
-        {
-            collectables.Add(collectableType, value);
+            if (inventory.inventoryItems[i].collectableType != collectableType) continue;
+            inventory.inventoryItems[i].quantity += value;
+            return;
         }
         
-        CollectableNumberUpdated?.Invoke(collectableType, collectables[collectableType]);
+        var newItem = new InventoryItem()
+        {
+            collectableType = collectableType,
+            quantity = value
+        };
+
+        inventory.inventoryItems.Add(newItem);
         Debug.Log($"Collected {value.ToString()} {collectableType}");
     }
 }

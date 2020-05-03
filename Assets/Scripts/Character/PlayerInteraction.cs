@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public class PlayerInteraction : MonoBehaviour
 {
-    [SerializeField] private CharacterController characterController;
+    [SerializeField] private PlayerCharacter characterController;
     [SerializeField] private CharacterHealth characterHealth;
 
     public static event Action<CollectableType, int> PickedUpItem;

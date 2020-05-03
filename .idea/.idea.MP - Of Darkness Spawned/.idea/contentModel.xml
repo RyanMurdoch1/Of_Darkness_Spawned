@@ -195,10 +195,12 @@
             <e p="PlayerReticule.cs" t="Include" />
           </e>
           <e p="Character" t="Include">
-            <e p="CharacterController.cs" t="Include" />
             <e p="CharacterInventory.cs" t="Include" />
             <e p="CharacterMotor.cs" t="Include" />
             <e p="CollisionChecker.cs" t="Include" />
+            <e p="InventoryItem.cs" t="Include" />
+            <e p="InventoryObject.cs" t="Include" />
+            <e p="PlayerCharacter.cs" t="Include" />
             <e p="PlayerInteraction.cs" t="Include" />
             <e p="PlayerStatsDisplay.cs" t="Include" />
           </e>
@@ -224,7 +226,10 @@
           </e>
           <e p="Projectiles" t="Include">
             <e p="Arrow.cs" t="Include" />
-            <e p="ArrowLauncher.cs" t="Include" />
+            <e p="ArrowTrap.cs" t="Include" />
+            <e p="Projectile.cs" t="Include" />
+            <e p="ProjectileLauncher.cs" t="Include" />
+            <e p="TrapArrow.cs" t="Include" />
           </e>
           <e p="State Machine" t="Include">
             <e p="PlayerStates" t="Include">
