@@ -36,8 +36,11 @@ public class CharacterMotor
         }
     }
 
-    private void StopMovement() => _rigidbody2D.velocity = Vector2.zero;
-    
+    private void StopMovement()
+    {
+        _rigidbody2D.velocity = Vector2.zero;
+    }
+
     public void FreezeMovement()
     {
         _rigidbody2D.isKinematic = true;

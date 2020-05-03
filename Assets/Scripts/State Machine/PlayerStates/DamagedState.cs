@@ -16,6 +16,7 @@ public class DamagedState : State
         base.Enter();
         AudioController.playAudioFile("Hit");
         _character.animator.SetBool(Damaged, true);
+        _character.characterMotor.ResumeMovement();
         _character.characterMotor.TakeDamage(damageDirection);
         _character.StartCoroutine(DamageLock());
     }
