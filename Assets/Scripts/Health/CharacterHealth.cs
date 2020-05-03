@@ -7,6 +7,7 @@ using UnityEngine;
 public class CharacterHealth : MonoBehaviour, ITakeDamage
 {
     [SerializeField] private int playerHealth;
+    private const int MaxHealth = 3;
     public static event Action<int> HealthChanged;
     public static event Action<Vector2> DamagedFromDirection;
 
@@ -19,6 +20,13 @@ public class CharacterHealth : MonoBehaviour, ITakeDamage
         HealthChanged?.Invoke(playerHealth);
         if (playerHealth != 0) return;
         Perish();
+    }
+
+    public void RestoreHealth(int value)
+    {
+        if (playerHealth == MaxHealth) return;
+        playerHealth += value;
+        HealthChanged?.Invoke(playerHealth);
     }
 
     public void Perish()

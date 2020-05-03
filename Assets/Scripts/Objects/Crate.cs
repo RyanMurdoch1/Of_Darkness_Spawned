@@ -2,7 +2,7 @@
 
 public class Crate : DestructableObject
 {
-    [SerializeField] private CollectableDropper dropper;
+    [SerializeField] private CollectableDropper[] collectableDroppers;
     [SerializeField] private Sprite damagedSprite;
     private const int HealthValue = 2;
     
@@ -21,7 +21,10 @@ public class Crate : DestructableObject
 
     public override void Perish()
     {
-        dropper.Drop();
+        for (var i = 0; i < collectableDroppers.Length; i++)
+        {
+            collectableDroppers[i].Drop();
+        }
         gameObject.SetActive(false);
     }
 }

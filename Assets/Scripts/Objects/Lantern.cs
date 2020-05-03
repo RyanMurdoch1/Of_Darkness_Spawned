@@ -2,7 +2,7 @@
 
 public class Lantern : DestructableObject
 {
-    [SerializeField] private CollectableDropper collectableDropper;
+    [SerializeField] private CollectableDropper[] collectableDroppers;
     private const int HealthValue = 1;
 
     protected override void SetHealth()
@@ -12,7 +12,10 @@ public class Lantern : DestructableObject
 
     public override void Perish()
     {
-        collectableDropper.Drop();
+        for (var i = 0; i < collectableDroppers.Length; i++)
+        {
+            collectableDroppers[i].Drop();
+        }
         gameObject.SetActive(false);
     }
 }

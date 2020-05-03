@@ -24,13 +24,24 @@ public class PlayerInteraction : MonoBehaviour
         {
             var collectable = environmentCol.gameObject.GetComponent<ICollectable>();
             PickedUpItem?.Invoke(collectable.collectableType, collectable.numberToCollect);
-            AudioController.playAudioFile("Collect");
-            environmentCol.gameObject.SetActive(false);
+            Collect(environmentCol);
+        }
+        
+        if (environmentCol.CompareTag("Health"))
+        {
+            characterHealth.RestoreHealth(1);
+            Collect(environmentCol);
         }
 
         if (!environmentCol.CompareTag("Weapon")) return;
         var damage = environmentCol.gameObject.GetComponent<IDealDamage>().damageAmount;
         characterHealth.TakeDamage(damage, environmentCol.transform.position);
+    }
+
+    private static void Collect(Collider2D environmentCol)
+    {
+        AudioController.playAudioFile("Collect");
+        environmentCol.gameObject.SetActive(false);
     }
 
     private void OnTriggerExit2D(Collider2D other)

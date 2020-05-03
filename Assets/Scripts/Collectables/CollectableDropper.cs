@@ -9,7 +9,7 @@ public class CollectableDropper : MonoBehaviour
 
     public void Drop()
     {
-        var dropNumber = Random.Range(dropRange.x + 1, dropRange.y + 1);
+        var dropNumber = Random.Range(dropRange.x + 1, dropRange.y);
         for (var i = 0; i < dropNumber; i++)
         {
             CollectablePool.spawnObject(collectableType, gameObject.transform.position);

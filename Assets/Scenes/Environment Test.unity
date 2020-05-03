@@ -16701,7 +16701,7 @@ GameObject:
   - component: {fileID: 481940526}
   - component: {fileID: 481940525}
   m_Layer: 0
-  m_Name: CollectablePool
+  m_Name: CollectablePoolAmulets
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16735,7 +16735,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &482622114
 PrefabInstance:
@@ -23894,6 +23894,53 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa9c750147149e7458ec800aea5dbb02, type: 3}
+--- !u!1 &741447496
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 741447498}
+  - component: {fileID: 741447497}
+  m_Layer: 0
+  m_Name: CollectablePoolHealth
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &741447497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 741447496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28d7f5e6a0ce00841ade637c22e3843f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectable: {fileID: 20932486625716948, guid: c24642eaf13029a4fb347eaa99dfff50,
+    type: 3}
+  poolNumber: 10
+  collectableType: 2
+--- !u!4 &741447498
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 741447496}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.4355257, y: 1.7533138, z: -20.542809}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &741977685 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8668271394567209175, guid: dd1a76cd022e85d48be5bb018484658d,
@@ -32377,7 +32424,7 @@ Transform:
   - {fileID: 1573977386}
   - {fileID: 6449807257587998079}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1039950727
 GameObject:
@@ -32475,11 +32522,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1039950727}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.224286, y: -0.47, z: 0}
+  m_LocalPosition: {x: 18.47, y: 0.78, z: 0}
   m_LocalScale: {x: 4.7, y: 4.7, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1044264338
 PrefabInstance:
@@ -38502,7 +38549,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 092572c3c18364e4db66f3ff5dbcc1ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthText: {fileID: 963754287}
+  healthIcons:
+  - {fileID: 731006850}
+  - {fileID: 1244376676}
+  - {fileID: 307122540}
   amuletText: {fileID: 1028677284}
 --- !u!1 &1298399674
 GameObject:
@@ -39891,7 +39941,6 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 55
-  playerMaterial: {fileID: 6200000, guid: 9d81aff575ba1e94388770fc85d35cd1, type: 2}
   canClimb: 0
   hideBowObjects: 1
   backBowArm: {fileID: 343419494}
@@ -39950,7 +39999,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a7430a15ce6715419d0dd22accfd3ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHealth: 10
+  playerHealth: 3
 --- !u!114 &1352077085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44457,7 +44506,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1484962692}
-  collectableDropper: {fileID: 1484962689}
+  collectableDroppers: []
 --- !u!61 &1484962691
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -65439,6 +65488,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1795938776190463493}
     m_Modifications:
+    - target: {fileID: 3035193525958931860, guid: 020ce7ad07c21944aa0ac548a1c0b086,
+        type: 3}
+      propertyPath: collectableType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3035193526738262913, guid: 020ce7ad07c21944aa0ac548a1c0b086,
         type: 3}
       propertyPath: m_LocalPosition.x

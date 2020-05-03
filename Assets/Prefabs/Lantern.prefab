@@ -985,6 +985,7 @@ GameObject:
   - component: {fileID: 3035193525958931863}
   - component: {fileID: 7938654437992697092}
   - component: {fileID: 3035193525958931860}
+  - component: {fileID: 8507586312013251382}
   m_Layer: 0
   m_Name: Lantern
   m_TagString: Untagged
@@ -1095,7 +1096,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 3035193525958931862}
-  collectableDropper: {fileID: 3035193525958931860}
+  collectableDroppers:
+  - {fileID: 8507586312013251382}
+  - {fileID: 3035193525958931860}
 --- !u!114 &3035193525958931860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1110,6 +1113,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collectableType: 0
   dropRange: {x: 0, y: 3}
+--- !u!114 &8507586312013251382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3035193525958931849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5b60da26ac374c4fb8423b05cc214b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectableType: 2
+  dropRange: {x: 0, y: 1}
 --- !u!1 &3035193526173773357
 GameObject:
   m_ObjectHideFlags: 0

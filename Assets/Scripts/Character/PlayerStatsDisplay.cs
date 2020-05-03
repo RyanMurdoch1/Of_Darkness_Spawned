@@ -1,13 +1,14 @@
 ﻿using System.Globalization;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Displays player stats
 /// </summary>
 public class PlayerStatsDisplay : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI healthText;
+    [SerializeField] private Image[] healthIcons;
     [SerializeField] private TextMeshProUGUI amuletText;
 
     private void Awake()
@@ -30,7 +31,13 @@ public class PlayerStatsDisplay : MonoBehaviour
         }
     }
 
-    private void SetHealth(int healthValue) => healthText.text = healthValue.ToString(CultureInfo.InvariantCulture);
-    
+    private void SetHealth(int healthValue)
+    {
+        for (var i = 0; i < healthIcons.Length; i++)
+        {
+            healthIcons[i].enabled = i < healthValue;
+        }
+    }
+
     private void SetAmulets(int amuletValue) => amuletText.text = amuletValue.ToString(CultureInfo.InvariantCulture);
 }
