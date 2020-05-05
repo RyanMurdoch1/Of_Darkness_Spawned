@@ -7,18 +7,11 @@ using Sirenix.OdinInspector;
 public class PlayerCharacter : MonoBehaviour
 {
     #region Variables
-    [SerializeField] private bool hideSpeedVariables = true;
-    [HideIfGroup("hideSpeedVariables")]
-    [BoxGroup("hideSpeedVariables/Speed Variables")]
-    [SerializeField] private float walkSpeed = 15;
-    [BoxGroup("hideSpeedVariables/Speed Variables")]
-    [SerializeField] private float airSpeed = 10;
-    [BoxGroup("hideSpeedVariables/Speed Variables")]
-    [SerializeField] private float climbSpeed = 1;
-    [BoxGroup("hideSpeedVariables/Speed Variables")]
-    [SerializeField] private float jumpForce = 600;
-    [BoxGroup("hideSpeedVariables/Speed Variables")]
-    [SerializeField] private float movementSmoothing = 0.05f;
+     private const float WalkSpeed = 3;
+     private const float AirSpeed = 2;
+     private const float ClimbSpeed = 3;
+     private const float JumpForce = 400;
+     private const float MovementSmoothing = 0.05f;
 
     [SerializeField] private bool hideCheckVariables = true;
     [HideIfGroup("hideCheckVariables")]
@@ -69,19 +62,28 @@ public class PlayerCharacter : MonoBehaviour
 
     private void Start()
     {
+        PlayerSetup();
+        SetUpPlayerStates();
+        characterStateMachine.Initialize(standingState);
+    }
+
+    private void PlayerSetup()
+    {
         characterStateMachine = new StateMachine();
         _collisionChecker = new CollisionChecker(groundCheck, whatIsGround, this);
-        _playerRigidbody2D = GetComponent<Rigidbody2D>();
-        characterMotor = new CharacterMotor(this, _playerRigidbody2D, jumpForce, movementSmoothing);
-        standingState = new StandingState(walkSpeed, _collisionChecker,this);
-        jumpingState = new JumpingState(airSpeed, _collisionChecker, this);
-        climbingState = new ClimbingState(climbSpeed, this, _collisionChecker);
+        _playerRigidbody2D = GetComponent<Rigidbody2D>(); 
+    }
+
+    private void SetUpPlayerStates()
+    {
+        characterMotor = new CharacterMotor(this, _playerRigidbody2D, JumpForce, MovementSmoothing);
+        standingState = new StandingState(WalkSpeed, _collisionChecker,this);
+        jumpingState = new JumpingState(AirSpeed, _collisionChecker, this);
+        climbingState = new ClimbingState(ClimbSpeed, this, _collisionChecker);
         damagedState = new DamagedState(this);
         shootingState = new BowState(this, frontBowArm, backBowArm, launcher);
         attackState = new AttackState(this, characterMotor, weaponZone);
         rollState = new RollState(this, characterMotor);
-        
-        characterStateMachine.Initialize(standingState);
     }
 
     private void AbleToClimb(bool able)

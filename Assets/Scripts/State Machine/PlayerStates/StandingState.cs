@@ -22,6 +22,13 @@ public class StandingState : State
 
     public override void HandleInput()
     {
+        if (_character.canClimb && Input.GetButtonDown("Climb"))
+        {
+            ChangeState(_character.climbingState);
+        }
+
+        if (!_isGrounded) return;
+        
         if (Input.GetButtonDown("Attack") && !isAttacking)
         {
             _character.characterStateMachine.ChangeState(_character.attackState);
@@ -35,17 +42,12 @@ public class StandingState : State
         _horizontalMovement = Input.GetAxisRaw("Horizontal") * _walkSpeed;
         _character.animator.SetFloat(Speed, Mathf.Abs(_horizontalMovement));
         
-        if (Input.GetButtonDown("Jump") && _isGrounded)
+        if (Input.GetButtonDown("Jump"))
         {
             ChangeState(_character.jumpingState);
         }
-        
-        if (_character.canClimb && Input.GetButtonDown("Climb"))
-        {
-            ChangeState(_character.climbingState);
-        }
 
-        if (Input.GetButtonDown($"Draw Bow") && _isGrounded)
+        if (Input.GetButtonDown($"Draw Bow"))
         {
             ChangeState(_character.shootingState);
         }
@@ -61,6 +63,11 @@ public class StandingState : State
     {
         _isGrounded = _collisionChecker.CheckForGround();
         _character.characterMotor.MoveHorizontal(_horizontalMovement);
+        CheckForMovement();
+    }
+
+    private void CheckForMovement()
+    {
         if (Math.Abs(_horizontalMovement) < MovementTolerance && _isGrounded)
         {
             _character.characterMotor.FreezeMovement();

@@ -23,7 +23,10 @@ public class RollState : State
 
     private IEnumerator EndState()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return WaitHelper.QuarterSecond;
+        AudioController.playAudioFile("Roll");
+        CameraShake.shakeCamera(0.004f, 0.25f);
+        yield return WaitHelper.QuarterSecond;
         _character.animator.SetBool(Rolling, false);
         _character.characterStateMachine.ChangeState(_character.standingState);
     }

@@ -7,8 +7,6 @@ public class AttackState : State
     private readonly CharacterMotor _motor;
     private readonly GameObject _weaponZone;
     private static readonly int Attacking = Animator.StringToHash("Attacking");
-    private readonly WaitForSeconds _quickWait = new WaitForSeconds(0.1f);
-    private readonly WaitForSeconds _longWait = new WaitForSeconds(0.3f);
 
     public AttackState(PlayerCharacter character, CharacterMotor motor, GameObject weaponZone)
     {
@@ -28,18 +26,17 @@ public class AttackState : State
     private IEnumerator Attack()
     {
         _character.animator.SetBool(Attacking, true);
-        yield return _longWait;
+        AudioController.playAudioFile("Fire Bow");
+        yield return WaitHelper.ThirdSecond;
         _weaponZone.SetActive(true);
-        yield return _quickWait;
+        CameraShake.shakeCamera(0.004f, 0.25f);
+        yield return WaitHelper.TenthSecond;
         _weaponZone.SetActive(false);
-        yield return _quickWait;
+        yield return WaitHelper.TenthSecond;
         _character.animator.SetBool(Attacking, false);
         _character.characterStateMachine.ChangeState(_character.standingState);
         _character.standingState.isAttacking = false;
     }
 
-    public override void Exit()
-    {
-        _motor.ResumeMovement();
-    }
+    public override void Exit() => _motor.ResumeMovement();
 }
