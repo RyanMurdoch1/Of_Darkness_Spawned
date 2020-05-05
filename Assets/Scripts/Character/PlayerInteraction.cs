@@ -6,18 +6,16 @@ using UnityEngine;
 /// </summary>
 public class PlayerInteraction : MonoBehaviour
 {
-    [SerializeField] private PlayerCharacter characterController;
-    [SerializeField] private CharacterHealth characterHealth;
-
     public static event Action<CollectableType, int> PickedUpItem;
+    public static event Action<bool> EnteredAreaClimbing;
+    public static event Action<int> RestoreHealth;
+    public static event Action<int, Vector2> TakeDamage;
     
-    // TODO: Send damage event instead
-    // TODO: Extract out to separate method
     private void OnTriggerEnter2D(Collider2D environmentCol)
     {
         if (environmentCol.CompareTag("Climbable"))
         {
-            characterController.canClimb = true;
+            EnteredAreaClimbing?.Invoke(true);
         }
 
         if (environmentCol.CompareTag("Collectable"))
@@ -29,16 +27,16 @@ public class PlayerInteraction : MonoBehaviour
         
         if (environmentCol.CompareTag("Health"))
         {
-            characterHealth.RestoreHealth(1);
+            RestoreHealth?.Invoke(1);
             Collect(environmentCol);
         }
 
         if (!environmentCol.CompareTag("Weapon")) return;
         var damage = environmentCol.gameObject.GetComponent<IDealDamage>().damageAmount;
-        characterHealth.TakeDamage(damage, environmentCol.transform.position);
+        TakeDamage?.Invoke(damage, environmentCol.transform.position);
     }
 
-    private static void Collect(Collider2D environmentCol)
+    private static void Collect(Component environmentCol)
     {
         AudioController.playAudioFile("Collect");
         environmentCol.gameObject.SetActive(false);
@@ -46,9 +44,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Climbable"))
-        {
-            characterController.canClimb = false;
-        }
+        if (!other.CompareTag("Climbable")) return;
+        EnteredAreaClimbing?.Invoke(false);
     }
 }

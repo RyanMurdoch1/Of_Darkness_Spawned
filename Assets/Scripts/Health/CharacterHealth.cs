@@ -11,7 +11,12 @@ public class CharacterHealth : MonoBehaviour, ITakeDamage
     public static event Action<int> HealthChanged;
     public static event Action<Vector2> DamagedFromDirection;
 
-    private void OnEnable() => HealthChanged?.Invoke(playerHealth);
+    private void OnEnable()
+    {
+        HealthChanged?.Invoke(playerHealth);
+        PlayerInteraction.RestoreHealth += RestoreHealth;
+        PlayerInteraction.TakeDamage += TakeDamage;
+    }
 
     public void TakeDamage(int damage, Vector2 damageDirection)
     {
@@ -22,7 +27,7 @@ public class CharacterHealth : MonoBehaviour, ITakeDamage
         Perish();
     }
 
-    public void RestoreHealth(int value)
+    private void RestoreHealth(int value)
     {
         if (playerHealth == MaxHealth) return;
         playerHealth += value;
@@ -32,5 +37,11 @@ public class CharacterHealth : MonoBehaviour, ITakeDamage
     public void Perish()
     {
         Debug.Log("Player Died");
+    }
+
+    private void OnDisable()
+    {
+        PlayerInteraction.RestoreHealth -= RestoreHealth;
+        PlayerInteraction.TakeDamage -= TakeDamage;
     }
 }

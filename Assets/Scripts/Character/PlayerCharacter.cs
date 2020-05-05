@@ -36,6 +36,8 @@ public class PlayerCharacter : MonoBehaviour
     private GameObject frontBowArm;
     [BoxGroup("hideBowObjects/Bow Objects")] [SerializeField]
     private ProjectileLauncher launcher;
+
+    [SerializeField] private GameObject weaponZone;
     #endregion
     
     public Animator animator;
@@ -47,14 +49,23 @@ public class PlayerCharacter : MonoBehaviour
     public ClimbingState climbingState;
     public DamagedState damagedState;
     public BowState shootingState;
+    public AttackState attackState;
     
     private Rigidbody2D _playerRigidbody2D;
     private CollisionChecker _collisionChecker;
 
-    private void OnEnable() => CharacterHealth.DamagedFromDirection += TakeDamage;
+    private void OnEnable()
+    {
+        CharacterHealth.DamagedFromDirection += TakeDamage;
+        PlayerInteraction.EnteredAreaClimbing += AbleToClimb;
+    }
 
-    private void OnDisable() => CharacterHealth.DamagedFromDirection -= TakeDamage;
-    
+    private void OnDisable()
+    {
+        CharacterHealth.DamagedFromDirection -= TakeDamage;
+        PlayerInteraction.EnteredAreaClimbing -= AbleToClimb;
+    }
+
     private void Start()
     {
         characterStateMachine = new StateMachine();
@@ -66,10 +77,16 @@ public class PlayerCharacter : MonoBehaviour
         climbingState = new ClimbingState(climbSpeed, this, _collisionChecker);
         damagedState = new DamagedState(this);
         shootingState = new BowState(this, frontBowArm, backBowArm, launcher);
+        attackState = new AttackState(this, characterMotor, weaponZone);
         
         characterStateMachine.Initialize(standingState);
     }
 
+    private void AbleToClimb(bool able)
+    {
+        canClimb = able;
+    }
+    
     private void TakeDamage(Vector2 damageDirection)
     {
         damagedState.damageDirection = damageDirection;

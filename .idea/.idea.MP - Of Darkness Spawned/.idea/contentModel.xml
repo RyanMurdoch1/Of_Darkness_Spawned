@@ -233,6 +233,7 @@
           </e>
           <e p="State Machine" t="Include">
             <e p="PlayerStates" t="Include">
+              <e p="AttackState.cs" t="Include" />
               <e p="BowState.cs" t="Include" />
               <e p="ClimbingState.cs" t="Include" />
               <e p="DamagedState.cs" t="Include" />
@@ -244,6 +245,7 @@
           </e>
           <e p="Weapons" t="Include">
             <e p="IDealDamage.cs" t="Include" />
+            <e p="PlayerWeapon.cs" t="Include" />
             <e p="Trap.cs" t="Include" />
           </e>
         </e>

@@ -11,6 +11,7 @@ public class StandingState : State
     private bool _isGrounded;
     private static readonly int Speed = Animator.StringToHash("Speed");
     private bool _movementStopped;
+    public bool isAttacking;
 
     public StandingState(float walkSpeed, CollisionChecker collisionChecker, PlayerCharacter character)
     {
@@ -21,6 +22,11 @@ public class StandingState : State
 
     public override void HandleInput()
     {
+        if (Input.GetButtonDown("Attack") && !isAttacking)
+        {
+            _character.characterStateMachine.ChangeState(_character.attackState);
+        }
+        
         _horizontalMovement = Input.GetAxisRaw("Horizontal") * _walkSpeed;
         _character.animator.SetFloat(Speed, Mathf.Abs(_horizontalMovement));
         

@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryItems:
   - collectableType: 0
-    exposedQuantity: 19
+    exposedQuantity: 95

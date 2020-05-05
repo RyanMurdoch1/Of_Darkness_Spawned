@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class ArrowTrap : MonoBehaviour
 {
-    [SerializeField] private ProjectileLauncher _launcher;
+    [SerializeField] private ProjectileLauncher launcher;
+    private readonly WaitForSeconds _fireWaitTime = new WaitForSeconds(4f);
     
     private void OnEnable()
     {
@@ -14,8 +15,8 @@ public class ArrowTrap : MonoBehaviour
     {
         while (gameObject.activeSelf)
         {
-            yield return new WaitForSeconds(4f);
-            _launcher.Launch(10);
+            yield return _fireWaitTime;
+            launcher.Launch(10);
         }
     }
 }
