@@ -50,6 +50,7 @@ public class PlayerCharacter : MonoBehaviour
     public DamagedState damagedState;
     public BowState shootingState;
     public AttackState attackState;
+    public RollState rollState;
     
     private Rigidbody2D _playerRigidbody2D;
     private CollisionChecker _collisionChecker;
@@ -78,6 +79,7 @@ public class PlayerCharacter : MonoBehaviour
         damagedState = new DamagedState(this);
         shootingState = new BowState(this, frontBowArm, backBowArm, launcher);
         attackState = new AttackState(this, characterMotor, weaponZone);
+        rollState = new RollState(this, characterMotor);
         
         characterStateMachine.Initialize(standingState);
     }

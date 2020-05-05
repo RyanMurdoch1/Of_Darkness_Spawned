@@ -26,6 +26,11 @@ public class StandingState : State
         {
             _character.characterStateMachine.ChangeState(_character.attackState);
         }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            ChangeState(_character.rollState);
+        }
         
         _horizontalMovement = Input.GetAxisRaw("Horizontal") * _walkSpeed;
         _character.animator.SetFloat(Speed, Mathf.Abs(_horizontalMovement));

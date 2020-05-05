@@ -238,6 +238,7 @@
               <e p="ClimbingState.cs" t="Include" />
               <e p="DamagedState.cs" t="Include" />
               <e p="JumpingState.cs" t="Include" />
+              <e p="RollState.cs" t="Include" />
               <e p="StandingState.cs" t="Include" />
             </e>
             <e p="State.cs" t="Include" />

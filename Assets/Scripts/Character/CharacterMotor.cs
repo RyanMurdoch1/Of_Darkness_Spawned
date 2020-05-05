@@ -65,7 +65,15 @@ public class CharacterMotor
     }
 
     public void Jump() => _rigidbody2D.AddForce(new Vector2(0f, _jumpForce));
-    
+
+    public void Roll()
+    {
+        StopMovement();
+        var rollForce = _jumpForce / 1.5f;
+        rollForce = FacingRight ? rollForce : -rollForce;
+        _rigidbody2D.AddForce(new Vector2(rollForce, 0));
+    }
+
     public void Flip()
     {
         FacingRight = !FacingRight;
