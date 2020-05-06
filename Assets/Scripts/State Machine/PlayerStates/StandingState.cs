@@ -22,19 +22,19 @@ public class StandingState : State
 
     public override void HandleInput()
     {
-        if (_character.canClimb && Input.GetButtonDown("Climb"))
+        if (_character.canClimb && Input.GetButtonDown("Climb") || _character.canClimb && Input.GetAxis("Vertical") > 0.5f)
         {
             ChangeState(_character.climbingState);
         }
 
         if (!_isGrounded) return;
         
-        if (Input.GetButtonDown("Attack") && !isAttacking)
+        if (Input.GetButtonDown("Attack") && !isAttacking || Input.GetAxis("Primary Attack") > 0.1f && !isAttacking)
         {
             _character.characterStateMachine.ChangeState(_character.attackState);
         }
 
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetButtonDown("Roll"))
         {
             ChangeState(_character.rollState);
         }
@@ -47,10 +47,9 @@ public class StandingState : State
             ChangeState(_character.jumpingState);
         }
 
-        if (Input.GetButtonDown($"Draw Bow"))
-        {
-            ChangeState(_character.shootingState);
-        }
+        if (!Input.GetButtonDown($"Draw Bow")) return;
+        _character.characterMotor.FreezeMovement();
+        _character.characterStateMachine.ChangeState(_character.shootingState);
     }
 
     private void ChangeState(State playerState)

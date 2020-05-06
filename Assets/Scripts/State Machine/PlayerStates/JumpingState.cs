@@ -31,7 +31,7 @@ public class JumpingState : State
     {
         _horizontalMovement = Input.GetAxisRaw("Horizontal") * _airSpeed;
 
-        if (_character.canClimb && Input.GetButtonDown("Climb"))
+        if (_character.canClimb && Input.GetButtonDown("Climb") || _character.canClimb && Input.GetAxis("Vertical") > 0.5f)
         {
             _character.characterStateMachine.ChangeState(_character.climbingState);
         }

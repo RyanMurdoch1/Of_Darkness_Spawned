@@ -52,7 +52,7 @@ public class BowState : State
     
     public override void HandleInput()
     {
-        if (Input.GetButtonDown($"Attack") && _readyToFire)
+        if (Input.GetButtonDown($"Attack") && _readyToFire || Input.GetAxis("Primary Attack") > 0.1f && _readyToFire)
         {
             _character.StopAllCoroutines();
             _character.StartCoroutine(FireArrow());
@@ -63,12 +63,12 @@ public class BowState : State
             _character.characterStateMachine.ChangeState(_character.jumpingState);
         }
 
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetButtonDown("Roll"))
         {
             _character.characterStateMachine.ChangeState(_character.rollState);
         }
 
-        if (Math.Abs(Input.GetAxisRaw("Horizontal")) > MovementThreshold)
+        if (Input.GetButtonDown("Draw Bow"))
         {
             _character.characterStateMachine.ChangeState(_character.standingState);
         }
