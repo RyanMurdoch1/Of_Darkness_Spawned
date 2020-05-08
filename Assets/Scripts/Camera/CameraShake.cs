@@ -5,6 +5,8 @@ public class CameraShake : MonoBehaviour
 {
     private Camera _mainCamera;
     private float _shakeAmount;
+    private const float ShakeRepeatRate = 0.01f;
+    private const float ShakeMultiplier = 2;
 
     public delegate void ShakeCamera(float strength, float time);
     public static ShakeCamera shakeCamera;
@@ -20,7 +22,7 @@ public class CameraShake : MonoBehaviour
     private void Shake(float amount, float length)
     {
         _shakeAmount = amount;
-        InvokeRepeating(nameof(BeginShake), 0, 0.01f);
+        InvokeRepeating(nameof(BeginShake), 0, ShakeRepeatRate);
         Invoke(nameof(StopShake), length);
     }
     
@@ -28,8 +30,8 @@ public class CameraShake : MonoBehaviour
     {
         if (!(_shakeAmount > 0)) return;
         var camPos = _mainCamera.transform.position;
-        var shakeAmountX = Random.value * _shakeAmount * 2 - _shakeAmount;
-        var shakeAmountY = Random.value * _shakeAmount * 2 - _shakeAmount;
+        var shakeAmountX = Random.value * _shakeAmount * ShakeMultiplier - _shakeAmount;
+        var shakeAmountY = Random.value * _shakeAmount * ShakeMultiplier - _shakeAmount;
         camPos.x += shakeAmountX;
         camPos.y += shakeAmountY;
 

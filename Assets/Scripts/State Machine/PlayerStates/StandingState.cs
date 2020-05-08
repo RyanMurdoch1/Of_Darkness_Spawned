@@ -22,7 +22,7 @@ public class StandingState : State
 
     public override void HandleInput()
     {
-        if (_character.canClimb && Input.GetButtonDown("Climb") || _character.canClimb && Input.GetAxis("Vertical") > 0.5f)
+        if (_character.canClimb && Input.GetAxis("Vertical") > 0.5f)
         {
             ChangeState(_character.climbingState);
         }

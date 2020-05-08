@@ -11,6 +11,8 @@ public class CharacterMotor
     private readonly float _smoothingValue;
     private readonly float _jumpForce;
     private Vector3 _velocity = Vector3.zero;
+    private const int DamageMultiplier = 6;
+    private const int OppositeDirection = -1;
 
     public CharacterMotor(PlayerCharacter character, Rigidbody2D rigidbody2D, float jumpForce, float smoothingValue)
     {
@@ -54,7 +56,7 @@ public class CharacterMotor
         var dir = damageDirection - new Vector2(_characterMovement.gameObject.transform.localPosition.x, _characterMovement.gameObject.transform.localPosition.y);
         dir = dir.normalized;
         StopMovement();
-        _rigidbody2D.AddForce(-dir * 6f, ForceMode2D.Impulse);
+        _rigidbody2D.AddForce(-dir * DamageMultiplier, ForceMode2D.Impulse);
     }
 
     public void MoveVertical(float moveValue)
@@ -78,7 +80,7 @@ public class CharacterMotor
     {
         FacingRight = !FacingRight;
         var theScale = _characterMovement.gameObject.transform.localScale;
-        theScale.x *= -1;
+        theScale.x *= OppositeDirection;
         _characterMovement.gameObject.transform.localScale = theScale;
     }
 }

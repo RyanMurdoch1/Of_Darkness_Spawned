@@ -31,7 +31,7 @@ public class ClimbingState : State
            _character.characterStateMachine.ChangeState(_character.jumpingState);
         }
 
-        if (_isGrounded && Input.GetKey(KeyCode.S))
+        if (_isGrounded && Input.GetKey(KeyCode.S)) // Todo: Swap this out
         {
             _character.characterStateMachine.ChangeState(_character.standingState);
         }
