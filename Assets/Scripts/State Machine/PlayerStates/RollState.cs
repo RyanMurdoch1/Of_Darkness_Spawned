@@ -12,7 +12,7 @@ public class RollState : State
         _character = character;
         _motor = motor;
     }
-    
+
     public override void Enter()
     {
         base.Enter();

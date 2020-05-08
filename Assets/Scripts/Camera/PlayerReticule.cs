@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class PlayerReticule : MonoBehaviour
@@ -21,7 +22,12 @@ public class PlayerReticule : MonoBehaviour
         BowState.BowForce -= BowCharge;
     }
 
-    private void Update() => gameObject.transform.localPosition = new Vector2(Input.mousePosition.x - canvasRect.sizeDelta.x/2f, Input.mousePosition.y - canvasRect.sizeDelta.y/2f);
+    private void Update()
+    {
+        var position = Mouse.current.position.ReadValue();
+        gameObject.transform.localPosition = new Vector2(position.x - canvasRect.sizeDelta.x / 2f,
+            position.y - canvasRect.sizeDelta.y / 2f);
+    }
 
     private void BowDrawn(bool value) => reticule.gameObject.SetActive(value);
 

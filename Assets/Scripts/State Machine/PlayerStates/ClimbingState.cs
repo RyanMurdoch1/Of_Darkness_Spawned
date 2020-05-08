@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ClimbingState : State
 {
-    private float _verticalMovement;
     private readonly PlayerCharacter _character;
     private readonly float _climbSpeed;
     private static readonly int Climbing = Animator.StringToHash("Climbing");
     private readonly CollisionChecker _collisionChecker;
-    private bool _isGrounded;
     
     public ClimbingState(float climbSpeed, PlayerCharacter character, CollisionChecker collisionChecker)
     {
@@ -20,28 +19,28 @@ public class ClimbingState : State
     {
         base.Enter();
         _character.animator.SetBool(Climbing, true);
+        _character.playerControls.Player.Jump.performed += Jump;
     }
-    
-    public override void HandleInput()
-    {
-        _verticalMovement = Input.GetAxisRaw("Vertical") * _climbSpeed;
 
-        if (Input.GetButtonDown("Jump"))
-        {
-           _character.characterStateMachine.ChangeState(_character.jumpingState);
-        }
-
-        if (_isGrounded && Input.GetKey(KeyCode.S)) // Todo: Swap this out
-        {
-            _character.characterStateMachine.ChangeState(_character.standingState);
-        }
-    }
+    private void Jump(InputAction.CallbackContext context) => _character.characterStateMachine.ChangeState(_character.jumpingState);
 
     public override void PhysicsUpdate()
     {
-        _character.characterMotor.MoveVertical(_verticalMovement);
-        _isGrounded = _collisionChecker.CheckForGround();
+        _character.characterMotor.MoveVertical(_character.movementTracker.verticalValue * _climbSpeed);
+        CheckForGrounded();
     }
 
-    public override void Exit() => _character.animator.SetBool(Climbing, false);
+    private void CheckForGrounded()
+    {
+        if (_collisionChecker.CheckForGround() && _character.movementTracker.verticalValue == -1)
+        {
+            _character.characterStateMachine.ChangeState(_character.standingState);
+        } 
+    }
+
+    public override void Exit()
+    {
+        _character.animator.SetBool(Climbing, false);
+        _character.playerControls.Player.Jump.performed -= Jump;
+    }
 }

@@ -1,17 +1,16 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class StandingState : State
 {
     private const float MovementTolerance = 0.01f;
-    private float _horizontalMovement;
     private readonly float _walkSpeed;
     private readonly PlayerCharacter _character;
     private readonly CollisionChecker _collisionChecker;
     private bool _isGrounded;
     private static readonly int Speed = Animator.StringToHash("Speed");
     private bool _movementStopped;
-    public bool isAttacking;
 
     public StandingState(float walkSpeed, CollisionChecker collisionChecker, PlayerCharacter character)
     {
@@ -20,40 +19,51 @@ public class StandingState : State
         _collisionChecker = collisionChecker;
     }
 
-    public override void HandleInput()
+    public override void Enter()
     {
-        if (_character.canClimb && Input.GetAxis("Vertical") > 0.5f)
-        {
-            ChangeState(_character.climbingState);
-        }
+        base.Enter();
+        _character.playerControls.Player.Attack.performed += Attack;
+        _character.playerControls.Player.Roll.performed += Roll;
+        _character.playerControls.Player.Jump.performed += Jump;
+        _character.playerControls.Player.ChangeWeapon.performed += ChangeWeapon;
+        _character.playerControls.Player.MoveVertical.performed += StartClimbing;
+    }
 
-        if (!_isGrounded) return;
-        
-        if (Input.GetButtonDown("Attack") && !isAttacking || Input.GetAxis("Primary Attack") > 0.1f && !isAttacking)
-        {
-            _character.characterStateMachine.ChangeState(_character.attackState);
-        }
+    public override void Exit()
+    {
+        _character.playerControls.Player.Attack.performed -= Attack;
+        _character.playerControls.Player.Roll.performed -= Roll;
+        _character.playerControls.Player.Jump.performed -= Jump;
+        _character.playerControls.Player.ChangeWeapon.performed -= ChangeWeapon;
+        _character.playerControls.Player.MoveVertical.performed -= StartClimbing;
+    }
+    
+    private void Attack(InputAction.CallbackContext context) => _character.characterStateMachine.ChangeState(_character.attackState);
 
-        if (Input.GetButtonDown("Roll"))
-        {
-            ChangeState(_character.rollState);
-        }
-        
-        _horizontalMovement = Input.GetAxisRaw("Horizontal") * _walkSpeed;
-        _character.animator.SetFloat(Speed, Mathf.Abs(_horizontalMovement));
-        
-        if (Input.GetButtonDown("Jump"))
-        {
-            ChangeState(_character.jumpingState);
-        }
+    private void Roll(InputAction.CallbackContext context) => ChangeState(_character.rollState, true);
 
-        if (!Input.GetButtonDown($"Draw Bow")) return;
+    private void Jump(InputAction.CallbackContext context)
+    {
+        ChangeState(_character.jumpingState, true);
+    }
+
+    private void StartClimbing(InputAction.CallbackContext context)
+    {
+        if (_character.movementTracker.verticalValue == 1)
+        {
+            ChangeState(_character.climbingState, true);
+        }
+    }
+    
+    private void ChangeWeapon(InputAction.CallbackContext context)
+    {
         _character.characterMotor.FreezeMovement();
         _character.characterStateMachine.ChangeState(_character.shootingState);
     }
-
-    private void ChangeState(State playerState)
+    
+    private void ChangeState(State playerState, bool mustBeGrounded)
     {
+        if (mustBeGrounded && !_isGrounded) return;
         _character.characterMotor.ResumeMovement();
         _character.characterStateMachine.ChangeState(playerState);
     }
@@ -61,13 +71,15 @@ public class StandingState : State
     public override void PhysicsUpdate()
     {
         _isGrounded = _collisionChecker.CheckForGround();
-        _character.characterMotor.MoveHorizontal(_horizontalMovement);
+        _character.characterMotor.MoveHorizontal(_character.movementTracker.horizontalValue * _walkSpeed);
         CheckForMovement();
     }
 
     private void CheckForMovement()
     {
-        if (Math.Abs(_horizontalMovement) < MovementTolerance && _isGrounded)
+        _character.animator.SetFloat(Speed, Mathf.Abs(_character.movementTracker.horizontalValue));
+
+        if (Math.Abs(_character.movementTracker.horizontalValue) < MovementTolerance && _isGrounded)
         {
             _character.characterMotor.FreezeMovement();
         }

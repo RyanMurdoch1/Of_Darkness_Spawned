@@ -10,7 +10,7 @@ public class PlayerCharacter : MonoBehaviour
      private const float WalkSpeed = 3;
      private const float AirSpeed = 2;
      private const float ClimbSpeed = 3;
-     private const float JumpForce = 400;
+     private const float JumpForce = 350;
      private const float MovementSmoothing = 0.05f;
 
     [SerializeField] private bool hideCheckVariables = true;
@@ -32,7 +32,8 @@ public class PlayerCharacter : MonoBehaviour
 
     [SerializeField] private GameObject weaponZone;
     #endregion
-    
+
+    public PlayerControls playerControls;
     public Animator animator;
     public CharacterMotor characterMotor; 
     public StateMachine characterStateMachine;
@@ -44,6 +45,7 @@ public class PlayerCharacter : MonoBehaviour
     public BowState shootingState;
     public AttackState attackState;
     public RollState rollState;
+    public MovementTracker movementTracker;
     
     private Rigidbody2D _playerRigidbody2D;
     private CollisionChecker _collisionChecker;
@@ -62,14 +64,17 @@ public class PlayerCharacter : MonoBehaviour
 
     private void Start()
     {
+        playerControls = new PlayerControls();
         PlayerSetup();
         SetUpPlayerStates();
+        EnableControls();
         characterStateMachine.Initialize(standingState);
     }
 
     private void PlayerSetup()
     {
         characterStateMachine = new StateMachine();
+        movementTracker = new MovementTracker(playerControls);
         _collisionChecker = new CollisionChecker(groundCheck, whatIsGround, this);
         _playerRigidbody2D = GetComponent<Rigidbody2D>(); 
     }
@@ -86,6 +91,15 @@ public class PlayerCharacter : MonoBehaviour
         rollState = new RollState(this, characterMotor);
     }
 
+    private void EnableControls()
+    {
+        playerControls.Player.Attack.Enable();
+
+        playerControls.Player.Roll.Enable();
+        playerControls.Player.Jump.Enable();
+        playerControls.Player.ChangeWeapon.Enable();
+    }
+    
     private void AbleToClimb(bool able)
     {
         canClimb = able;

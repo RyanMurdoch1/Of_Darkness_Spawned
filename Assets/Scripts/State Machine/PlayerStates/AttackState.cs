@@ -14,12 +14,11 @@ public class AttackState : State
         _motor = motor;
         _weaponZone = weaponZone;
     }
-
+    
     public override void Enter()
     {
         base.Enter();
         _motor.FreezeMovement();
-        _character.standingState.isAttacking = true;
         _character.StartCoroutine(Attack());
     }
 
@@ -35,7 +34,6 @@ public class AttackState : State
         yield return WaitHelper.TenthSecond;
         _character.animator.SetBool(Attacking, false);
         _character.characterStateMachine.ChangeState(_character.standingState);
-        _character.standingState.isAttacking = false;
     }
 
     public override void Exit() => _motor.ResumeMovement();

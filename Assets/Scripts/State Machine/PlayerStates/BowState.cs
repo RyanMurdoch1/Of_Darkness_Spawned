@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class BowState : State
 {
@@ -12,7 +13,6 @@ public class BowState : State
     private float _bowForce;
     private const float BaseForce = 15f;
     private const float ArmScaleAdjustment = 5f;
-    private const float MovementThreshold = 0.1f;
     private static readonly int DrawingBow = Animator.StringToHash("DrawingBow");
     private static readonly int FiringBow = Animator.StringToHash("FiringBow");
     private readonly Vector2 _leftScale = new Vector2(-1, 1);
@@ -48,31 +48,27 @@ public class BowState : State
         DisplayAndDrawBow(true);
         _character.characterMotor.FreezeMovement();
         _character.StartCoroutine(ChargeBow());
+        _character.playerControls.Player.Attack.performed += FireBow;
+        _character.playerControls.Player.Roll.performed += Roll;
+        _character.playerControls.Player.Jump.performed += Jump;
+        _character.playerControls.Player.ChangeWeapon.performed += ChangeWeapon;
+    }
+
+    private void Jump(InputAction.CallbackContext context) => _character.characterStateMachine.ChangeState(_character.jumpingState);
+    
+    private void Roll(InputAction.CallbackContext context) => _character.characterStateMachine.ChangeState(_character.rollState);
+    
+    private void ChangeWeapon(InputAction.CallbackContext context) => _character.characterStateMachine.ChangeState(_character.standingState);
+
+    private void FireBow(InputAction.CallbackContext context)
+    {
+        if (!_readyToFire) return;
+        _character.StopAllCoroutines();
+        _character.StartCoroutine(FireArrow());
     }
     
     public override void HandleInput()
-    {
-        if (Input.GetButtonDown($"Attack") && _readyToFire || Input.GetAxis("Primary Attack") > 0.1f && _readyToFire)
-        {
-            _character.StopAllCoroutines();
-            _character.StartCoroutine(FireArrow());
-        }
-
-        if (Input.GetButtonDown("Jump"))
-        {
-            _character.characterStateMachine.ChangeState(_character.jumpingState);
-        }
-
-        if (Input.GetButtonDown("Roll"))
-        {
-            _character.characterStateMachine.ChangeState(_character.rollState);
-        }
-
-        if (Input.GetButtonDown("Draw Bow"))
-        {
-            _character.characterStateMachine.ChangeState(_character.standingState);
-        }
-
+    { 
         RotateBow();
     }
 
@@ -108,7 +104,7 @@ public class BowState : State
     
     private void RotateBow()
     {
-        var mouse = Input.mousePosition;
+        var mouse = Mouse.current.position.ReadValue(); //context.ReadValue<Vector2>();
         var screenPoint = _playerCamera.WorldToScreenPoint(_backArm.transform.position);
         var offset = new Vector2(mouse.x - screenPoint.x, mouse.y - screenPoint.y);
         if (offset.x < 0 && Math.Abs(_frontArm.transform.localScale.x - _leftScale.x) > 0.1)
@@ -153,6 +149,10 @@ public class BowState : State
         _character.StopAllCoroutines();
         AdjustCamera?.Invoke(0, 3);
         CameraShake.shakeCamera(0, 0);
+        _character.playerControls.Player.Attack.performed -= FireBow;
+        _character.playerControls.Player.Roll.performed -= Roll;
+        _character.playerControls.Player.Jump.performed -= Jump;
+        _character.playerControls.Player.ChangeWeapon.performed -= ChangeWeapon;
         _character.characterMotor.ResumeMovement();
     }
 }
