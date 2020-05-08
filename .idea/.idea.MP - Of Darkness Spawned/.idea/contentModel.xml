@@ -216,6 +216,9 @@
             <e p="DamageReceiver.cs" t="Include" />
             <e p="ITakeDamage.cs" t="Include" />
           </e>
+          <e p="Helpers" t="Include">
+            <e p="WaitHelper.cs" t="Include" />
+          </e>
           <e p="Misc" t="Include">
             <e p="CrowFlyController.cs" t="Include" />
           </e>
@@ -233,10 +236,12 @@
           </e>
           <e p="State Machine" t="Include">
             <e p="PlayerStates" t="Include">
+              <e p="AttackState.cs" t="Include" />
               <e p="BowState.cs" t="Include" />
               <e p="ClimbingState.cs" t="Include" />
               <e p="DamagedState.cs" t="Include" />
               <e p="JumpingState.cs" t="Include" />
+              <e p="RollState.cs" t="Include" />
               <e p="StandingState.cs" t="Include" />
             </e>
             <e p="State.cs" t="Include" />
@@ -244,6 +249,7 @@
           </e>
           <e p="Weapons" t="Include">
             <e p="IDealDamage.cs" t="Include" />
+            <e p="PlayerWeapon.cs" t="Include" />
             <e p="Trap.cs" t="Include" />
           </e>
         </e>

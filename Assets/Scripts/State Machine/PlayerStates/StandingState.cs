@@ -11,6 +11,7 @@ public class StandingState : State
     private bool _isGrounded;
     private static readonly int Speed = Animator.StringToHash("Speed");
     private bool _movementStopped;
+    public bool isAttacking;
 
     public StandingState(float walkSpeed, CollisionChecker collisionChecker, PlayerCharacter character)
     {
@@ -21,23 +22,34 @@ public class StandingState : State
 
     public override void HandleInput()
     {
-        _horizontalMovement = Input.GetAxisRaw("Horizontal") * _walkSpeed;
-        _character.animator.SetFloat(Speed, Mathf.Abs(_horizontalMovement));
-        
-        if (Input.GetButtonDown("Jump") && _isGrounded)
-        {
-            ChangeState(_character.jumpingState);
-        }
-        
-        if (_character.canClimb && Input.GetButtonDown("Climb"))
+        if (_character.canClimb && Input.GetAxis("Vertical") > 0.5f)
         {
             ChangeState(_character.climbingState);
         }
 
-        if (Input.GetButtonDown($"Draw Bow") && _isGrounded)
+        if (!_isGrounded) return;
+        
+        if (Input.GetButtonDown("Attack") && !isAttacking || Input.GetAxis("Primary Attack") > 0.1f && !isAttacking)
         {
-            ChangeState(_character.shootingState);
+            _character.characterStateMachine.ChangeState(_character.attackState);
         }
+
+        if (Input.GetButtonDown("Roll"))
+        {
+            ChangeState(_character.rollState);
+        }
+        
+        _horizontalMovement = Input.GetAxisRaw("Horizontal") * _walkSpeed;
+        _character.animator.SetFloat(Speed, Mathf.Abs(_horizontalMovement));
+        
+        if (Input.GetButtonDown("Jump"))
+        {
+            ChangeState(_character.jumpingState);
+        }
+
+        if (!Input.GetButtonDown($"Draw Bow")) return;
+        _character.characterMotor.FreezeMovement();
+        _character.characterStateMachine.ChangeState(_character.shootingState);
     }
 
     private void ChangeState(State playerState)
@@ -50,6 +62,11 @@ public class StandingState : State
     {
         _isGrounded = _collisionChecker.CheckForGround();
         _character.characterMotor.MoveHorizontal(_horizontalMovement);
+        CheckForMovement();
+    }
+
+    private void CheckForMovement()
+    {
         if (Math.Abs(_horizontalMovement) < MovementTolerance && _isGrounded)
         {
             _character.characterMotor.FreezeMovement();

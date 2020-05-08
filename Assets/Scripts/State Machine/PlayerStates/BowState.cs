@@ -22,7 +22,6 @@ public class BowState : State
     public static event Action<float, float> AdjustCamera;
     public static event Action<bool> DrawBow;
     public static event Action<int> BowForce;
-    private readonly WaitForSeconds _bowStageWaitTime = new WaitForSeconds(0.25f);
     private bool _readyToFire;
     #endregion
 
@@ -53,7 +52,7 @@ public class BowState : State
     
     public override void HandleInput()
     {
-        if (Input.GetButtonDown($"Attack") && _readyToFire)
+        if (Input.GetButtonDown($"Attack") && _readyToFire || Input.GetAxis("Primary Attack") > 0.1f && _readyToFire)
         {
             _character.StopAllCoroutines();
             _character.StartCoroutine(FireArrow());
@@ -64,7 +63,12 @@ public class BowState : State
             _character.characterStateMachine.ChangeState(_character.jumpingState);
         }
 
-        if (Math.Abs(Input.GetAxisRaw("Horizontal")) > MovementThreshold)
+        if (Input.GetButtonDown("Roll"))
+        {
+            _character.characterStateMachine.ChangeState(_character.rollState);
+        }
+
+        if (Input.GetButtonDown("Draw Bow"))
         {
             _character.characterStateMachine.ChangeState(_character.standingState);
         }
@@ -83,10 +87,10 @@ public class BowState : State
         _readyToFire = true;
     }
 
-    private IEnumerator ChargeStep(int step)
+    private static IEnumerator ChargeStep(int step)
     {
         CameraShake.shakeCamera(0.004f, 0.25f);
-        yield return _bowStageWaitTime;
+        yield return WaitHelper.QuarterSecond;
         AudioController.playAudioFile("Tick");
         BowForce?.Invoke(step);
     }
@@ -97,7 +101,7 @@ public class BowState : State
         AudioController.playAudioFile("Fire Bow");
         _character.animator.SetBool(FiringBow, true);
         _launcher.Launch(BaseForce);
-        yield return _bowStageWaitTime;
+        yield return WaitHelper.QuarterSecond;
         _character.animator.SetBool(FiringBow, false);
         _character.StartCoroutine(ChargeBow());
     }

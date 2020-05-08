@@ -15,5 +15,5 @@ MonoBehaviour:
   fileName: Hit
   audioType: 0
   clip: {fileID: 8300000, guid: cc67287d5c703b643a5e5bcb42a40715, type: 3}
-  volume: 0.5
+  volume: 0.25
   pitch: 1

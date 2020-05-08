@@ -36,6 +36,5 @@ public class CharacterInventory : MonoBehaviour
         };
 
         inventory.inventoryItems.Add(newItem);
-        Debug.Log($"Collected {value.ToString()} {collectableType}");
     }
 }
