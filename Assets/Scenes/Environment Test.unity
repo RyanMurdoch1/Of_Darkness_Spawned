@@ -50355,6 +50355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dafac05e8ec15f246a11cdee2811bc58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1352077081}
   reticule: {fileID: 966547016}
   reticulesStates:
   - {fileID: -2259070565770987102, guid: 6dc91f2badc17be4b92d406b9dedb671, type: 3}
@@ -63391,6 +63392,49 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad0cd78ffdb67d347a36fb65c2ef9908, type: 3}
+--- !u!1 &2082207029
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2082207030}
+  - component: {fileID: 2082207031}
+  m_Layer: 0
+  m_Name: InputDeviceManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2082207030
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082207029}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 14.044351, y: 1.6726508, z: -0.78399056}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2082207031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082207029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb9c1be3741aa2f4db40d851825fad09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2084257204
 PrefabInstance:
   m_ObjectHideFlags: 0

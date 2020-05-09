@@ -75,8 +75,7 @@
             <e p="Third-Party Notices.txt" t="Include" />
           </e>
         </e>
-        <e p="MovementTracker.cs" t="Include" />
-        <e p="PlayerControls.cs" t="Include" />
+        <e p="InputDeviceManager.cs" t="Include" />
         <e p="Plugins" t="Include">
           <e p="ConsolePro" t="Include">
             <e p="ConsoleProDebug.cs" t="Include" />
@@ -220,6 +219,10 @@
           </e>
           <e p="Helpers" t="Include">
             <e p="WaitHelper.cs" t="Include" />
+          </e>
+          <e p="Input" t="Include">
+            <e p="DirectionalMovementTracker.cs" t="Include" />
+            <e p="PlayerControls.cs" t="Include" />
           </e>
           <e p="Misc" t="Include">
             <e p="CrowFlyController.cs" t="Include" />

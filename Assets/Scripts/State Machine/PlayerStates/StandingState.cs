@@ -49,7 +49,7 @@ public class StandingState : State
 
     private void StartClimbing(InputAction.CallbackContext context)
     {
-        if (_character.movementTracker.verticalValue == 1)
+        if (Math.Abs(_character.movementTracker.verticalMoveValue - 1) < MovementTolerance && _character.canClimb)
         {
             ChangeState(_character.climbingState, true);
         }
@@ -71,15 +71,15 @@ public class StandingState : State
     public override void PhysicsUpdate()
     {
         _isGrounded = _collisionChecker.CheckForGround();
-        _character.characterMotor.MoveHorizontal(_character.movementTracker.horizontalValue * _walkSpeed);
+        _character.characterMotor.MoveHorizontal(_character.movementTracker.horizontalMoveValue * _walkSpeed);
         CheckForMovement();
     }
 
     private void CheckForMovement()
     {
-        _character.animator.SetFloat(Speed, Mathf.Abs(_character.movementTracker.horizontalValue));
+        _character.animator.SetFloat(Speed, Mathf.Abs(_character.movementTracker.horizontalMoveValue));
 
-        if (Math.Abs(_character.movementTracker.horizontalValue) < MovementTolerance && _isGrounded)
+        if (Math.Abs(_character.movementTracker.horizontalMoveValue) < MovementTolerance && _isGrounded)
         {
             _character.characterMotor.FreezeMovement();
         }

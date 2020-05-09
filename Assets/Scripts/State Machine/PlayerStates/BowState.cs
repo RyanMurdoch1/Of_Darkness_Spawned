@@ -10,6 +10,7 @@ public class BowState : State
     private readonly GameObject _backArm;
     private readonly ProjectileLauncher _launcher;
     private readonly PlayerCharacter _character;
+    private const float Tolerance = 0.1f;
     private float _bowForce;
     private const float BaseForce = 15f;
     private const float ArmScaleAdjustment = 5f;
@@ -39,10 +40,12 @@ public class BowState : State
         base.Enter();
         if (_character.characterMotor.FacingRight)
         {
+            _character.movementTracker.SetRightMousePosition();
             SetPose(_rightScale, ArmScaleAdjustment);
         }
         else
         {
+            _character.movementTracker.SetLeftMousePosition();
             SetPose(_leftScale, -ArmScaleAdjustment);
         }
         DisplayAndDrawBow(true);
@@ -52,12 +55,32 @@ public class BowState : State
         _character.playerControls.Player.Roll.performed += Roll;
         _character.playerControls.Player.Jump.performed += Jump;
         _character.playerControls.Player.ChangeWeapon.performed += ChangeWeapon;
+        _character.playerControls.Player.MoveHorizontal.performed += ExitBowState;
     }
 
     private void Jump(InputAction.CallbackContext context) => _character.characterStateMachine.ChangeState(_character.jumpingState);
     
-    private void Roll(InputAction.CallbackContext context) => _character.characterStateMachine.ChangeState(_character.rollState);
-    
+    private void Roll(InputAction.CallbackContext context)
+    {
+        if (_character.characterMotor.FacingRight && Math.Abs(_character.movementTracker.horizontalMoveValue - -1) < Tolerance)
+        {
+            FlipPlayer(_leftScale);
+        }
+        else if (!_character.characterMotor.FacingRight && Math.Abs(_character.movementTracker.horizontalMoveValue - 1) < Tolerance)
+        {
+            FlipPlayer(_rightScale);
+        }
+        _character.characterStateMachine.ChangeState(_character.rollState);
+    }
+
+    private void ExitBowState(InputAction.CallbackContext context)
+    {
+        if (Math.Abs(Mathf.Abs(context.ReadValue<float>()) - 1) < Tolerance)
+        {
+            _character.characterStateMachine.ChangeState(_character.standingState);
+        }
+    }
+
     private void ChangeWeapon(InputAction.CallbackContext context) => _character.characterStateMachine.ChangeState(_character.standingState);
 
     private void FireBow(InputAction.CallbackContext context)
@@ -67,10 +90,7 @@ public class BowState : State
         _character.StartCoroutine(FireArrow());
     }
     
-    public override void HandleInput()
-    { 
-        RotateBow();
-    }
+    public override void HandleInput() => RotateBow();
 
     private IEnumerator ChargeBow()
     {
@@ -104,14 +124,15 @@ public class BowState : State
     
     private void RotateBow()
     {
-        var mouse = Mouse.current.position.ReadValue(); //context.ReadValue<Vector2>();
+        _character.movementTracker.MoveCursor();
+        var mouse = _character.movementTracker.mousePosition;
         var screenPoint = _playerCamera.WorldToScreenPoint(_backArm.transform.position);
         var offset = new Vector2(mouse.x - screenPoint.x, mouse.y - screenPoint.y);
-        if (offset.x < 0 && Math.Abs(_frontArm.transform.localScale.x - _leftScale.x) > 0.1)
+        if (offset.x < 0 && Math.Abs(_frontArm.transform.localScale.x - _leftScale.x) > Tolerance)
         {
             FlipPlayer(_leftScale);
         }
-        else if (offset.x >= 0 && Math.Abs(_frontArm.transform.localScale.x - _rightScale.x) > 0.1)
+        else if (offset.x >= 0 && Math.Abs(_frontArm.transform.localScale.x - _rightScale.x) > Tolerance)
         {
             FlipPlayer(_rightScale);
         }
@@ -139,7 +160,7 @@ public class BowState : State
     private void FlipPlayer(Vector2 armScale)
     {
         _character.characterMotor.Flip();
-        SetPose(armScale, Math.Abs(armScale.x + 1) < 0.1f ? -5 : 5);
+        SetPose(armScale, Math.Abs(armScale.x + 1) < Tolerance ? -5 : 5);
     }
 
     public override void Exit()
@@ -153,6 +174,7 @@ public class BowState : State
         _character.playerControls.Player.Roll.performed -= Roll;
         _character.playerControls.Player.Jump.performed -= Jump;
         _character.playerControls.Player.ChangeWeapon.performed -= ChangeWeapon;
+        _character.playerControls.Player.MoveHorizontal.performed -= ExitBowState;
         _character.characterMotor.ResumeMovement();
     }
 }

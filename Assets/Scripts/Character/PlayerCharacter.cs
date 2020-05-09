@@ -45,7 +45,7 @@ public class PlayerCharacter : MonoBehaviour
     public BowState shootingState;
     public AttackState attackState;
     public RollState rollState;
-    public MovementTracker movementTracker;
+    public DirectionalMovementTracker movementTracker;
     
     private Rigidbody2D _playerRigidbody2D;
     private CollisionChecker _collisionChecker;
@@ -74,7 +74,7 @@ public class PlayerCharacter : MonoBehaviour
     private void PlayerSetup()
     {
         characterStateMachine = new StateMachine();
-        movementTracker = new MovementTracker(playerControls);
+        movementTracker = new DirectionalMovementTracker(playerControls);
         _collisionChecker = new CollisionChecker(groundCheck, whatIsGround, this);
         _playerRigidbody2D = GetComponent<Rigidbody2D>(); 
     }
@@ -94,7 +94,6 @@ public class PlayerCharacter : MonoBehaviour
     private void EnableControls()
     {
         playerControls.Player.Attack.Enable();
-
         playerControls.Player.Roll.Enable();
         playerControls.Player.Jump.Enable();
         playerControls.Player.ChangeWeapon.Enable();
@@ -117,8 +116,5 @@ public class PlayerCharacter : MonoBehaviour
         characterStateMachine.currentState.LogicUpdate();
     }
 
-    private void FixedUpdate()
-    {
-        characterStateMachine.currentState.PhysicsUpdate();
-    }
+    private void FixedUpdate() => characterStateMachine.currentState.PhysicsUpdate();
 }

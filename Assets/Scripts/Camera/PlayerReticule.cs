@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class PlayerReticule : MonoBehaviour
 {
+    [SerializeField] private PlayerCharacter player;
     [SerializeField] private Image reticule;
     [SerializeField] private Sprite[] reticulesStates;
     [SerializeField] private RectTransform canvasRect;
-    private Vector2 _mousePosition;
 
     private void Awake()
     {
@@ -24,7 +23,7 @@ public class PlayerReticule : MonoBehaviour
 
     private void Update()
     {
-        var position = Mouse.current.position.ReadValue();
+        var position = player.movementTracker.mousePosition;
         gameObject.transform.localPosition = new Vector2(position.x - canvasRect.sizeDelta.x / 2f,
             position.y - canvasRect.sizeDelta.y / 2f);
     }

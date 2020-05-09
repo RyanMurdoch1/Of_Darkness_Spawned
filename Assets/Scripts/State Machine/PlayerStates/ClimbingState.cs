@@ -26,13 +26,13 @@ public class ClimbingState : State
 
     public override void PhysicsUpdate()
     {
-        _character.characterMotor.MoveVertical(_character.movementTracker.verticalValue * _climbSpeed);
+        _character.characterMotor.MoveVertical(_character.movementTracker.verticalMoveValue * _climbSpeed);
         CheckForGrounded();
     }
 
     private void CheckForGrounded()
     {
-        if (_collisionChecker.CheckForGround() && _character.movementTracker.verticalValue == -1)
+        if (_collisionChecker.CheckForGround() && _character.movementTracker.verticalMoveValue == -1)
         {
             _character.characterStateMachine.ChangeState(_character.standingState);
         } 

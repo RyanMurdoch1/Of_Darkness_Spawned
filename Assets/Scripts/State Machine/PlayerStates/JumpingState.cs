@@ -30,7 +30,7 @@ public class JumpingState : State
     
     private void StartClimbing(InputAction.CallbackContext context)
     {
-        if (!_character.canClimb) return;
+        if (!_character.canClimb || context.ReadValue<float>() != 1) return;
         _character.characterStateMachine.ChangeState(_character.climbingState);
     }
     
@@ -41,7 +41,7 @@ public class JumpingState : State
             _character.characterStateMachine.ChangeState(_character.standingState);
         }
         
-        _character.characterMotor.MoveHorizontal(_character.movementTracker.horizontalValue * _airSpeed);
+        _character.characterMotor.MoveHorizontal(_character.movementTracker.horizontalMoveValue * _airSpeed);
     }
     
     private IEnumerator ClearGround()
