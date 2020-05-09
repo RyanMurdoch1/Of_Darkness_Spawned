@@ -60,6 +60,7 @@ public class PlayerCharacter : MonoBehaviour
     {
         CharacterHealth.DamagedFromDirection -= TakeDamage;
         PlayerInteraction.EnteredAreaClimbing -= AbleToClimb;
+        movementTracker.StopTracking();
     }
 
     private void Start()
@@ -77,18 +78,18 @@ public class PlayerCharacter : MonoBehaviour
         movementTracker = new DirectionalMovementTracker(playerControls);
         _collisionChecker = new CollisionChecker(groundCheck, whatIsGround, this);
         _playerRigidbody2D = GetComponent<Rigidbody2D>(); 
+        characterMotor = new CharacterMotor(this, _playerRigidbody2D, JumpForce, MovementSmoothing);
     }
 
     private void SetUpPlayerStates()
     {
-        characterMotor = new CharacterMotor(this, _playerRigidbody2D, JumpForce, MovementSmoothing);
         standingState = new StandingState(WalkSpeed, _collisionChecker,this);
         jumpingState = new JumpingState(AirSpeed, _collisionChecker, this);
         climbingState = new ClimbingState(ClimbSpeed, this, _collisionChecker);
         damagedState = new DamagedState(this);
         shootingState = new BowState(this, frontBowArm, backBowArm, launcher);
-        attackState = new AttackState(this, characterMotor, weaponZone);
-        rollState = new RollState(this, characterMotor);
+        attackState = new AttackState(this, weaponZone);
+        rollState = new RollState(this);
     }
 
     private void EnableControls()

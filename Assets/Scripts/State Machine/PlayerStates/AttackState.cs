@@ -4,21 +4,19 @@ using UnityEngine;
 public class AttackState : State
 {
     private readonly PlayerCharacter _character;
-    private readonly CharacterMotor _motor;
     private readonly GameObject _weaponZone;
     private static readonly int Attacking = Animator.StringToHash("Attacking");
 
-    public AttackState(PlayerCharacter character, CharacterMotor motor, GameObject weaponZone)
+    public AttackState(PlayerCharacter character, GameObject weaponZone)
     {
         _character = character;
-        _motor = motor;
         _weaponZone = weaponZone;
     }
     
     public override void Enter()
     {
         base.Enter();
-        _motor.FreezeMovement();
+        _character.characterMotor.FreezeMovement();
         _character.StartCoroutine(Attack());
     }
 
@@ -36,5 +34,5 @@ public class AttackState : State
         _character.characterStateMachine.ChangeState(_character.standingState);
     }
 
-    public override void Exit() => _motor.ResumeMovement();
+    public override void Exit() => _character.characterMotor.ResumeMovement();
 }
