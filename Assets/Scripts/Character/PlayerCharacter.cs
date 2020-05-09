@@ -10,7 +10,7 @@ public class PlayerCharacter : MonoBehaviour
      private const float WalkSpeed = 3;
      private const float AirSpeed = 2;
      private const float ClimbSpeed = 3;
-     private const float JumpForce = 400;
+     private const float JumpForce = 350;
      private const float MovementSmoothing = 0.05f;
 
     [SerializeField] private bool hideCheckVariables = true;
@@ -32,7 +32,8 @@ public class PlayerCharacter : MonoBehaviour
 
     [SerializeField] private GameObject weaponZone;
     #endregion
-    
+
+    public PlayerControls playerControls;
     public Animator animator;
     public CharacterMotor characterMotor; 
     public StateMachine characterStateMachine;
@@ -44,6 +45,7 @@ public class PlayerCharacter : MonoBehaviour
     public BowState shootingState;
     public AttackState attackState;
     public RollState rollState;
+    public DirectionalMovementTracker movementTracker;
     
     private Rigidbody2D _playerRigidbody2D;
     private CollisionChecker _collisionChecker;
@@ -58,34 +60,46 @@ public class PlayerCharacter : MonoBehaviour
     {
         CharacterHealth.DamagedFromDirection -= TakeDamage;
         PlayerInteraction.EnteredAreaClimbing -= AbleToClimb;
+        movementTracker.StopTracking();
     }
 
     private void Start()
     {
+        playerControls = new PlayerControls();
         PlayerSetup();
         SetUpPlayerStates();
+        EnableControls();
         characterStateMachine.Initialize(standingState);
     }
 
     private void PlayerSetup()
     {
         characterStateMachine = new StateMachine();
+        movementTracker = new DirectionalMovementTracker(playerControls);
         _collisionChecker = new CollisionChecker(groundCheck, whatIsGround, this);
         _playerRigidbody2D = GetComponent<Rigidbody2D>(); 
+        characterMotor = new CharacterMotor(this, _playerRigidbody2D, JumpForce, MovementSmoothing);
     }
 
     private void SetUpPlayerStates()
     {
-        characterMotor = new CharacterMotor(this, _playerRigidbody2D, JumpForce, MovementSmoothing);
         standingState = new StandingState(WalkSpeed, _collisionChecker,this);
         jumpingState = new JumpingState(AirSpeed, _collisionChecker, this);
         climbingState = new ClimbingState(ClimbSpeed, this, _collisionChecker);
         damagedState = new DamagedState(this);
         shootingState = new BowState(this, frontBowArm, backBowArm, launcher);
-        attackState = new AttackState(this, characterMotor, weaponZone);
-        rollState = new RollState(this, characterMotor);
+        attackState = new AttackState(this, weaponZone);
+        rollState = new RollState(this);
     }
 
+    private void EnableControls()
+    {
+        playerControls.Player.Attack.Enable();
+        playerControls.Player.Roll.Enable();
+        playerControls.Player.Jump.Enable();
+        playerControls.Player.ChangeWeapon.Enable();
+    }
+    
     private void AbleToClimb(bool able)
     {
         canClimb = able;
@@ -103,8 +117,5 @@ public class PlayerCharacter : MonoBehaviour
         characterStateMachine.currentState.LogicUpdate();
     }
 
-    private void FixedUpdate()
-    {
-        characterStateMachine.currentState.PhysicsUpdate();
-    }
+    private void FixedUpdate() => characterStateMachine.currentState.PhysicsUpdate();
 }

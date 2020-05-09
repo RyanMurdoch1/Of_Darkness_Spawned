@@ -4,20 +4,18 @@ using UnityEngine;
 public class RollState : State
 {
     private readonly PlayerCharacter _character;
-    private readonly CharacterMotor _motor;
     private static readonly int Rolling = Animator.StringToHash("Rolling");
 
-    public RollState(PlayerCharacter character, CharacterMotor motor)
+    public RollState(PlayerCharacter character)
     {
         _character = character;
-        _motor = motor;
     }
-    
+
     public override void Enter()
     {
         base.Enter();
         _character.animator.SetBool(Rolling, true);
-        _motor.Roll();
+        _character.characterMotor.Roll();
         _character.StartCoroutine(EndState());
     }
 

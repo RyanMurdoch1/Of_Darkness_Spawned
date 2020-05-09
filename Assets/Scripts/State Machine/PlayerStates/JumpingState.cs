@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class JumpingState : State
 {
-    private float _horizontalMovement;
     private readonly float _airSpeed;
     private readonly PlayerCharacter _character;
     private readonly CollisionChecker _collisionChecker;
@@ -17,7 +17,7 @@ public class JumpingState : State
         _collisionChecker = collisionChecker;
         _character = character;
     }
-
+    
     public override void Enter()
     {
         base.Enter();
@@ -25,18 +25,15 @@ public class JumpingState : State
         _character.characterMotor.Jump();
         _character.StartCoroutine(ClearGround());
         _character.animator.SetBool(Jumping, true);
+        _character.playerControls.Player.MoveVertical.performed += StartClimbing;
     }
-
-    public override void HandleInput()
+    
+    private void StartClimbing(InputAction.CallbackContext context)
     {
-        _horizontalMovement = Input.GetAxisRaw("Horizontal") * _airSpeed;
-
-        if (_character.canClimb && Input.GetAxis("Vertical") > 0.5f)
-        {
-            _character.characterStateMachine.ChangeState(_character.climbingState);
-        }
+        if (!_character.canClimb || context.ReadValue<float>() != 1) return;
+        _character.characterStateMachine.ChangeState(_character.climbingState);
     }
-
+    
     public override void PhysicsUpdate()
     {
         if (_collisionChecker.CheckForGround() && _clearedGround)
@@ -44,7 +41,7 @@ public class JumpingState : State
             _character.characterStateMachine.ChangeState(_character.standingState);
         }
         
-        _character.characterMotor.MoveHorizontal(_horizontalMovement);
+        _character.characterMotor.MoveHorizontal(_character.movementTracker.horizontalMoveValue * _airSpeed);
     }
     
     private IEnumerator ClearGround()
@@ -55,6 +52,7 @@ public class JumpingState : State
     
     public override void Exit()
     {
+        _character.playerControls.Player.MoveVertical.performed -= StartClimbing;
         _character.animator.SetBool(Jumping, false);
         CameraShake.shakeCamera(0.004f, 0.25f);
     }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
 public class CameraShake : MonoBehaviour
@@ -34,13 +35,16 @@ public class CameraShake : MonoBehaviour
         var shakeAmountY = Random.value * _shakeAmount * ShakeMultiplier - _shakeAmount;
         camPos.x += shakeAmountX;
         camPos.y += shakeAmountY;
-
         _mainCamera.transform.position = camPos;
+        if (!InputDeviceManager.isUsingGamePad) return;
+        Gamepad.current.SetMotorSpeeds(0.25f, 0.75f);
     }
 
     private void StopShake()
     {
         CancelInvoke(nameof(BeginShake));
         _mainCamera.transform.localPosition = Vector3.zero;
+        if (!InputDeviceManager.isUsingGamePad) return;
+        Gamepad.current.SetMotorSpeeds(0f, 0f);
     }
 }
