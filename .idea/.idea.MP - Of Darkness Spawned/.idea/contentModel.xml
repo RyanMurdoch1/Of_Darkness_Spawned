@@ -258,6 +258,53 @@
             <e p="Trap.cs" t="Include" />
           </e>
         </e>
+        <e p="Tilemap" t="Include">
+          <e p="Brick" t="Include">
+            <e p="Scripts" t="Include">
+              <e p="Ball.cs" t="Include" />
+              <e p="Brick.cs" t="Include" />
+              <e p="GameEnd.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Destructible" t="Include">
+            <e p="Scripts" t="Include">
+              <e p="Destructible.cs" t="Include" />
+              <e p="Editor" t="Include">
+                <e p="DestructibleEditor.cs" t="Include" />
+              </e>
+              <e p="Explosion.cs" t="Include" />
+              <e p="MouseClickBomb.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Editor" t="Include">
+            <e p="PreviewUtil.cs" t="Include" />
+          </e>
+          <e p="IsometricZAsY" t="Include">
+            <e p="Scripts" t="Include">
+              <e p="BasicCameraFollow.cs" t="Include" />
+              <e p="CustomAxisSortCamera.cs" t="Include" />
+              <e p="HideTilemapColliderOnPlay.cs" t="Include" />
+              <e p="IsometricCharacterRenderer.cs" t="Include" />
+              <e p="IsometricPlayerMovementController.cs" t="Include" />
+              <e p="ToggleHeightLevel.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Normal Mapping" t="Include">
+            <e p="Material" t="Include">
+              <e p="Shader" t="Include">
+                <e p="NormalMappedTile.shader" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="Rule Tiles" t="Include">
+            <e p="Rule Override Tile" t="Include">
+              <e p="ExampleSiblingRuleTile.cs" t="Include" />
+              <e p="Sprites" t="Include">
+                <e p="Kenney.nl.txt" t="Include" />
+              </e>
+            </e>
+          </e>
+        </e>
       </e>
       <e p="MP - Of Darkness Spawned.sln" t="IncludeFlat" />
       <e p="obj" t="ExcludeRecursive" />
