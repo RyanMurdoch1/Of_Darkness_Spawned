@@ -105,7 +105,7 @@ public class BowState : State
 
     private static IEnumerator ChargeStep(int step)
     {
-        CameraShake.shakeCamera(0.004f, 0.25f);
+        CameraShake.shakeCamera();
         yield return WaitHelper.QuarterSecond;
         AudioController.playAudioFile("Tick");
         BowForce?.Invoke(step);
@@ -169,7 +169,6 @@ public class BowState : State
         _character.animator.SetBool(FiringBow, false);
         _character.StopAllCoroutines();
         AdjustCamera?.Invoke(0, 3);
-        CameraShake.shakeCamera(0, 0);
         _character.playerControls.Player.Attack.performed -= FireBow;
         _character.playerControls.Player.Roll.performed -= Roll;
         _character.playerControls.Player.Jump.performed -= Jump;

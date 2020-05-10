@@ -6,38 +6,25 @@ using Sirenix.OdinInspector;
 /// </summary>
 public class PlayerCharacter : MonoBehaviour
 {
-    #region Variables
      private const float WalkSpeed = 3;
      private const float AirSpeed = 2;
      private const float ClimbSpeed = 3;
      private const float JumpForce = 350;
      private const float MovementSmoothing = 0.05f;
-
-    [SerializeField] private bool hideCheckVariables = true;
-    [HideIfGroup("hideCheckVariables")]
-    [BoxGroup("hideCheckVariables/Check Variables")]
+     
     [SerializeField] private Transform groundCheck;
-    [BoxGroup("hideCheckVariables/Check Variables")]
     [SerializeField] private LayerMask whatIsGround;
-    [BoxGroup("hideCheckVariables/Check Variables")]
-    public bool canClimb;
-
-    [SerializeField] private bool hideBowObjects = true;
-    [HideIfGroup("hideBowObjects")] [BoxGroup("hideBowObjects/Bow Objects")] [SerializeField]
-    private GameObject backBowArm;
-    [BoxGroup("hideBowObjects/Bow Objects")] [SerializeField]
-    private GameObject frontBowArm;
-    [BoxGroup("hideBowObjects/Bow Objects")] [SerializeField]
-    private ProjectileLauncher launcher;
-
+    [SerializeField] private GameObject backBowArm;
+    [SerializeField] private GameObject frontBowArm;
+    [SerializeField] private ProjectileLauncher launcher;
     [SerializeField] private GameObject weaponZone;
-    #endregion
 
     public PlayerControls playerControls;
+    public bool canClimb;
     public Animator animator;
-    public CharacterMotor characterMotor; 
-    public StateMachine characterStateMachine;
+    public CharacterMotor characterMotor;
     
+    public StateMachine characterStateMachine;
     public StandingState standingState;
     public JumpingState jumpingState;
     public ClimbingState climbingState;
@@ -49,6 +36,9 @@ public class PlayerCharacter : MonoBehaviour
     
     private Rigidbody2D _playerRigidbody2D;
     private CollisionChecker _collisionChecker;
+    
+    private CharacterHealth _characterHealth;
+    [SerializeField] private int playerHealthAmount = 3;
 
     private void OnEnable()
     {
@@ -75,6 +65,7 @@ public class PlayerCharacter : MonoBehaviour
     private void PlayerSetup()
     {
         characterStateMachine = new StateMachine();
+        _characterHealth = new CharacterHealth(playerHealthAmount);
         movementTracker = new DirectionalMovementTracker(playerControls);
         _collisionChecker = new CollisionChecker(groundCheck, whatIsGround, this);
         _playerRigidbody2D = GetComponent<Rigidbody2D>(); 

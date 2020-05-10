@@ -26,7 +26,7 @@ public class AttackState : State
         AudioController.playAudioFile("Fire Bow");
         yield return WaitHelper.ThirdSecond;
         _weaponZone.SetActive(true);
-        CameraShake.shakeCamera(0.004f, 0.25f);
+        CameraShake.shakeCamera();
         yield return WaitHelper.TenthSecond;
         _weaponZone.SetActive(false);
         yield return WaitHelper.TenthSecond;

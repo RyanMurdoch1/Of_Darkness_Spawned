@@ -18,7 +18,7 @@ TagManager:
   - 
   - 
   - Player
-  - 
+  - FX
   - 
   - 
   - 
@@ -44,4 +44,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 2278005249
     locked: 0

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,6 +11,7 @@ public class JumpingState : State
     private bool _isGrounded;
     private static readonly int Jumping = Animator.StringToHash("Jumping");
     private bool _clearedGround;
+    private const float Tolerance = 0.01f;
 
     public JumpingState(float airSpeed, CollisionChecker collisionChecker, PlayerCharacter character) 
     {
@@ -30,7 +32,7 @@ public class JumpingState : State
     
     private void StartClimbing(InputAction.CallbackContext context)
     {
-        if (!_character.canClimb || context.ReadValue<float>() != 1) return;
+        if (!_character.canClimb || Math.Abs(context.ReadValue<float>() - 1) > Tolerance) return;
         _character.characterStateMachine.ChangeState(_character.climbingState);
     }
     
@@ -54,6 +56,6 @@ public class JumpingState : State
     {
         _character.playerControls.Player.MoveVertical.performed -= StartClimbing;
         _character.animator.SetBool(Jumping, false);
-        CameraShake.shakeCamera(0.004f, 0.25f);
+        CameraShake.shakeCamera();
     }
 }

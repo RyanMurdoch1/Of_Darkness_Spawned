@@ -23,7 +23,7 @@ public class RollState : State
     {
         yield return WaitHelper.QuarterSecond;
         AudioController.playAudioFile("Roll");
-        CameraShake.shakeCamera(0.004f, 0.25f);
+        CameraShake.shakeCamera();
         yield return WaitHelper.QuarterSecond;
         _character.animator.SetBool(Rolling, false);
         _character.characterStateMachine.ChangeState(_character.standingState);

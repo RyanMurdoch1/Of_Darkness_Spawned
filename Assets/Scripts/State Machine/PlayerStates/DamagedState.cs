@@ -23,7 +23,7 @@ public class DamagedState : State
 
     private IEnumerator DamageLock()
     {
-        CameraShake.shakeCamera(0.01f, 0.6f);
+        CameraShake.shakeCamera();
         yield return _lockTime;
         _character.characterStateMachine.ChangeState(_character.standingState);
     }

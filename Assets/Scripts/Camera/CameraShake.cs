@@ -5,11 +5,13 @@ using Random = UnityEngine.Random;
 public class CameraShake : MonoBehaviour
 {
     private Camera _mainCamera;
-    private float _shakeAmount;
+    private const float ShakeAmount = 0.004f;
+    private const float ShakeTime = 0.25f;
+    private const float HighShake = 0.75f;
     private const float ShakeRepeatRate = 0.01f;
     private const float ShakeMultiplier = 2;
 
-    public delegate void ShakeCamera(float strength, float time);
+    public delegate void ShakeCamera();
     public static ShakeCamera shakeCamera;
 
     private void Awake()
@@ -20,24 +22,22 @@ public class CameraShake : MonoBehaviour
 
     private void OnDisable() => shakeCamera -= Shake;
 
-    private void Shake(float amount, float length)
+    private void Shake()
     {
-        _shakeAmount = amount;
         InvokeRepeating(nameof(BeginShake), 0, ShakeRepeatRate);
-        Invoke(nameof(StopShake), length);
+        Invoke(nameof(StopShake), ShakeTime);
     }
     
     private void BeginShake()
     {
-        if (!(_shakeAmount > 0)) return;
         var camPos = _mainCamera.transform.position;
-        var shakeAmountX = Random.value * _shakeAmount * ShakeMultiplier - _shakeAmount;
-        var shakeAmountY = Random.value * _shakeAmount * ShakeMultiplier - _shakeAmount;
+        var shakeAmountX = Random.value * ShakeAmount * ShakeMultiplier - ShakeAmount;
+        var shakeAmountY = Random.value * ShakeAmount * ShakeMultiplier - ShakeAmount;
         camPos.x += shakeAmountX;
         camPos.y += shakeAmountY;
         _mainCamera.transform.position = camPos;
         if (!InputDeviceManager.isUsingGamePad) return;
-        Gamepad.current.SetMotorSpeeds(0.25f, 0.75f);
+        Gamepad.current.SetMotorSpeeds(ShakeTime, HighShake);
     }
 
     private void StopShake()

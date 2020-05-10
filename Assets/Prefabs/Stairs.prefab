@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9132338173877594367}
   - component: {fileID: 6876510496535486180}
   - component: {fileID: 1344664495497809762}
+  - component: {fileID: 9145124293239936657}
   m_Layer: 0
   m_Name: Stairs
   m_TagString: Untagged
@@ -50,7 +51,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a90c7f75383c83e48b9853064230fb6e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -114,3 +115,31 @@ PolygonCollider2D:
       - {x: -0.16, y: -0.14}
       - {x: 0.16, y: -0.14}
       - {x: 0.16, y: 0.14}
+--- !u!114 &9145124293239936657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4927410827024602907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 00000000
+  m_ShapePath:
+  - {x: -0.1679306, y: -0.13689739, z: 0}
+  - {x: 0.16, y: -0.14, z: 0}
+  - {x: 0.15559125, y: 0.14389378, z: 0}
+  - {x: 0.14356422, y: 0.1462087, z: 0}
+  - {x: 0.12185478, y: 0.056402385, z: 0}
+  - {x: -0.066936255, y: -0.11537641, z: 0}
+  m_ShapePathHash: 155206099
+  m_Mesh: {fileID: 0}
+  m_InstanceId: 365812
