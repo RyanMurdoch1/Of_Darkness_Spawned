@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 4927410827024602907}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.5, y: -0.65, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 4}
+  m_LocalScale: {x: -7.1, y: 7.1, z: 4}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -71,7 +71,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 3
   m_Sprite: {fileID: -7880391012929709814, guid: 1dc61a693f25f1f409927b373be8674a,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -109,12 +109,12 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.12546772, y: 0.123209305}
-      - {x: -0.14992797, y: -0.09007441}
-      - {x: -0.21707416, y: -0.13986498}
-      - {x: -0.16, y: -0.14}
+    - - {x: 0.1008305, y: 0.13690028}
+      - {x: -0.12802821, y: -0.09281258}
+      - {x: -0.18148689, y: -0.14534129}
+      - {x: -0.08608777, y: -0.14547636}
       - {x: 0.16, y: -0.14}
-      - {x: 0.16, y: 0.14}
+      - {x: 0.15999994, y: 0.13999999}
 --- !u!114 &9145124293239936657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,4 +142,4 @@ MonoBehaviour:
   - {x: -0.066936255, y: -0.11537641, z: 0}
   m_ShapePathHash: 155206099
   m_Mesh: {fileID: 0}
-  m_InstanceId: 365812
+  m_InstanceId: -92994

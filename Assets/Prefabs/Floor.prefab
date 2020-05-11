@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 8668271394567209175}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7.5, y: 0.5, z: 0}
-  m_LocalScale: {x: 4.7, y: 4.7, z: 1}
+  m_LocalScale: {x: 6.3, y: 6.3, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_HasRenderer: 1
   m_UseRendererSilhouette: 1
   m_CastsShadows: 1
-  m_SelfShadows: 0
+  m_SelfShadows: 1
   m_ApplyToSortingLayers: 00000000
   m_ShapePath:
   - {x: -0.076515004, y: -0.07741755, z: 0}
@@ -134,4 +134,4 @@ MonoBehaviour:
   - {x: -0.07364576, y: 0.07956913, z: 0}
   m_ShapePathHash: -1469916236
   m_Mesh: {fileID: 0}
-  m_InstanceId: 365870
+  m_InstanceId: -67420

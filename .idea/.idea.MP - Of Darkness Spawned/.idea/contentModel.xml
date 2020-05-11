@@ -266,16 +266,6 @@
               <e p="GameEnd.cs" t="Include" />
             </e>
           </e>
-          <e p="Destructible" t="Include">
-            <e p="Scripts" t="Include">
-              <e p="Destructible.cs" t="Include" />
-              <e p="Editor" t="Include">
-                <e p="DestructibleEditor.cs" t="Include" />
-              </e>
-              <e p="Explosion.cs" t="Include" />
-              <e p="MouseClickBomb.cs" t="Include" />
-            </e>
-          </e>
           <e p="Editor" t="Include">
             <e p="PreviewUtil.cs" t="Include" />
           </e>
@@ -293,14 +283,6 @@
             <e p="Material" t="Include">
               <e p="Shader" t="Include">
                 <e p="NormalMappedTile.shader" t="Include" />
-              </e>
-            </e>
-          </e>
-          <e p="Rule Tiles" t="Include">
-            <e p="Rule Override Tile" t="Include">
-              <e p="ExampleSiblingRuleTile.cs" t="Include" />
-              <e p="Sprites" t="Include">
-                <e p="Kenney.nl.txt" t="Include" />
               </e>
             </e>
           </e>
